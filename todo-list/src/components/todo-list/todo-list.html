@@ -1,0 +1,7 @@
+<h1>ToDo List</h1>
+<ul>
+  @for (task of tasks; track $index) {
+  <li>{{ task }} <button (click)="deleteTask($index)">Delete</button></li>
+  }
+</ul>
+<input type="text" /><button>Add</button>
