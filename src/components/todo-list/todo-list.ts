@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TodoItem } from '../todo-item/todo-item';
 
 @Component({
   selector: 'app-todo-list',
@@ -7,7 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './todo-list.css',
 })
 export class TodoList {
-  tasks: string[] = ['Task 1', 'Task 2', 'Task 3'];
+  tasks: TodoItem[] = [
+    { id: 1, text: 'Learn Angular' },
+    { id: 2, text: 'Build an app' },
+    { id: 3, text: 'Deploy to production' },
+  ];
 
   deleteTask(index: number) {
     this.tasks.splice(index, 1);

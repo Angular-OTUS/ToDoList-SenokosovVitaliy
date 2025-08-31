@@ -1,7 +1,10 @@
 <h1>ToDo List</h1>
 <ul>
   @for (task of tasks; track $index) {
-  <li>{{ task }} <button (click)="deleteTask($index)">Delete</button></li>
+  <li style="display: flex; align-items: center; margin-bottom: 8px">
+    <button (click)="deleteTask($index)">Delete</button>
+    <span>{{ task.id }} - {{ task.text }}</span>
+  </li>
   }
 </ul>
 <input type="text" /><button>Add</button>
