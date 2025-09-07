@@ -1,1 +1,5 @@
-<div><span>{{ id }}</span>: <span>{{ text }}</span></div>
+<div class="todo-item">
+  <p class="todo-item__id">{{ task.id }}</p>
+  <p class="todo-item__text">{{ task.text }}</p>
+  <button class="button button--delete" (click)="delete.emit()">Remove</button>
+</div>

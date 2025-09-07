@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+export interface Task {
+  id: number;
+  text: string;
+}
 
 @Component({
   selector: 'app-todo-item',
@@ -7,6 +12,6 @@ import { Component } from '@angular/core';
   styleUrl: './todo-item.css',
 })
 export class TodoItem {
-  id: number;
-  text: string;
+  @Input() task: Task;
+  @Output() delete = new EventEmitter<void>();
 }

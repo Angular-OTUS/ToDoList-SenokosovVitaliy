@@ -1,0 +1,36 @@
+.todo-item {
+  display: flex;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace;
+  background: var(--ui-bg);
+  border: 1px solid var(--ui-border);
+  border-radius: 10px;
+  box-shadow: var(--ui-shadow);
+  transition: background .2s, border-color .2s, box-shadow .2s, transform .05s;
+}
+
+.todo-item__id {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  font-weight: 600;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: #1f2937;
+  background: #eaf7ef;
+  border: 1px solid #bfe3cb;
+  border-radius: 999px;
+}
+
+.todo-item__text {
+  flex: 1;
+  min-width: 0;
+  margin: 0 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #111827;
+}

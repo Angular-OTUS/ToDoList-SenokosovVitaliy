@@ -4,23 +4,30 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { TodoItem } from '../todo-item/todo-item';
+import { TodoItem, Task } from '../todo-item/todo-item';
 
 @Component({
   selector: 'app-todo-list',
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    TodoItem,
+  ],
   templateUrl: './todo-list.html',
   styleUrl: './todo-list.css',
 })
 export class TodoList {
-  tasks: TodoItem[] = [
+  tasks: Task[] = [
     { id: 1, text: 'Learn Angular' },
     { id: 2, text: 'Build an app' },
     { id: 3, text: 'Deploy to production' },
   ];
 
   isTextEmpty = true;
-  
+
   addTask(text: string) {
     const value = text.trim();
     if (!value) return;
@@ -29,8 +36,8 @@ export class TodoList {
     this.tasks = [...this.tasks, { id: nextId, text: value }];
   }
 
-  deleteTask(index: number) {
-    this.tasks.splice(index, 1);
+  deleteTask(task: Task) {
+    this.tasks = this.tasks.filter(t => t !== task);
   }
 
   textChanged(value: string) {
