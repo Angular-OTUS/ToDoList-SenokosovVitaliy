@@ -11,7 +11,7 @@
   }
 </ul>
 
-<input #taskInput type="text"
+<input matInput #taskInput type="text"
        (keyup.enter)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
        (keyup)="textChanged(taskInput.value)" />
 
