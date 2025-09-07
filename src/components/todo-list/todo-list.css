@@ -11,6 +11,18 @@
     background-color: #28a745;
 }
 
+.button--add:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #6c757d;
+}
+
 .button--delete {
     background-color: #dc3545;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
 }

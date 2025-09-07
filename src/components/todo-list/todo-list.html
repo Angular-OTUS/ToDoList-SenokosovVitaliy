@@ -1,12 +1,22 @@
 <h1>ToDo List</h1>
+
 <ul>
-  @for (task of tasks; track $index) {
-  <li style="display: flex; align-items: center; margin-bottom: 8px">
-    <button class="button button--delete" (click)="deleteTask($index)">
-      Delete
-    </button>
-    <span>{{ task.id }} - {{ task.text }}</span>
-  </li>
+  @for (task of tasks; track task.id) {
+    <li class="todo-item">
+      <button class="button button--delete" (click)="deleteTask($index)">
+        Delete
+      </button>
+      <span>{{ task.id }} - {{ task.text }}</span>
+    </li>
   }
 </ul>
-<input type="text" /><button class="button button--add">Add</button>
+
+<input #taskInput type="text"
+       (keyup.enter)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
+       (keyup)="textChanged(taskInput.value)" />
+
+<button class="button button--add"
+        [disabled]="isTextEmpty"
+        (click)="addTask(taskInput.value); taskInput.value=''; textChanged('')">
+  Add
+</button>
