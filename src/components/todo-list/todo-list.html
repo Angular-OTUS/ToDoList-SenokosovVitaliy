@@ -2,7 +2,7 @@
 
 <ul class="todo-list">
   @for (task of tasks; track task) {
-  <li><app-todo-item [task]="task" (delete)="deleteTask(task)"/></li>
+  <app-todo-item [task]="task" (delete)="deleteTask(task)"/>
   }
 </ul>
 

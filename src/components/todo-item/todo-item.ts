@@ -12,6 +12,6 @@ export interface Task {
   styleUrl: './todo-item.css',
 })
 export class TodoItem {
-  @Input() task: Task;
+  @Input() task!: Task;
   @Output() delete = new EventEmitter<void>();
 }
