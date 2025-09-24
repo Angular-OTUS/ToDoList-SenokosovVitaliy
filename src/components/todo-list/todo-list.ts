@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { TodoItem, Task } from '../todo-item/todo-item';
+import { Button } from "../button/button";
 
 @Component({
   selector: 'app-todo-list',
@@ -15,7 +16,8 @@ import { TodoItem, Task } from '../todo-item/todo-item';
     MatInputModule,
     MatButtonModule,
     TodoItem,
-  ],
+    Button
+],
   templateUrl: './todo-list.html',
   styleUrl: './todo-list.css',
 })

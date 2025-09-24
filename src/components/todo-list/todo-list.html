@@ -2,7 +2,7 @@
 
 <ul class="todo-list">
   @for (task of tasks; track task) {
-  <app-todo-item [task]="task" (delete)="deleteTask(task)"/>
+  <app-todo-item [task]="task" (delete)="deleteTask(task)" />
   }
 </ul>
 
@@ -14,10 +14,9 @@
   (keyup)="textChanged(taskInput.value)"
 />
 
-<button
-  class="button button--add"
-  [disabled]="isTextEmpty"
-  (click)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
->
-  Add
-</button>
+<app-button
+  Title="Add"
+  (Clicked)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
+  [isDisabled]="isTextEmpty"
+  className="button button--add"
+/>

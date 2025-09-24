@@ -1,0 +1,22 @@
+.button {
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button--add {
+    background-color: #28a745;
+}
+
+.button--add:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #6c757d;
+}
+
+.button--delete {
+    background-color: #dc3545;
+}
