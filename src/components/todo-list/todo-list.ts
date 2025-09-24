@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { TodoItem, Task } from '../todo-item/todo-item';
-import { Button } from "../button/button";
+import { Button } from '../button/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-todo-list',
@@ -16,12 +17,13 @@ import { Button } from "../button/button";
     MatInputModule,
     MatButtonModule,
     TodoItem,
-    Button
-],
+    Button,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './todo-list.html',
   styleUrl: './todo-list.css',
 })
-export class TodoList {
+export class TodoList implements OnInit {
   tasks: Task[] = [
     { id: 1, text: 'Learn Angular' },
     { id: 2, text: 'Build an app' },
@@ -29,6 +31,13 @@ export class TodoList {
   ];
 
   isTextEmpty = true;
+  isLoading = true;
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 5000);
+  }
 
   addTask(text: string) {
     const value = text.trim();
@@ -39,7 +48,7 @@ export class TodoList {
   }
 
   deleteTask(task: Task) {
-    this.tasks = this.tasks.filter(t => t !== task);
+    this.tasks = this.tasks.filter((t) => t !== task);
   }
 
   textChanged(value: string) {

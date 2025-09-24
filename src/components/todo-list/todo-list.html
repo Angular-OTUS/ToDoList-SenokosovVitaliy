@@ -1,5 +1,10 @@
 <h1>ToDo List</h1>
 
+@if (isLoading) {
+<div class="loading">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+} @else {
 <ul class="todo-list">
   @for (task of tasks; track task) {
   <app-todo-item [task]="task" (delete)="deleteTask(task)" />
@@ -20,3 +25,4 @@
   [isDisabled]="isTextEmpty"
   className="button button--add"
 />
+}
