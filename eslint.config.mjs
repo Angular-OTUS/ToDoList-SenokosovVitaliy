@@ -42,6 +42,7 @@ export default [
           style: 'kebab-case',
         },
       ],
+      'comma-dangle': ['error', 'always-multiline'],
     },
   },
   {

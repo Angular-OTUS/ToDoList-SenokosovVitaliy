@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Button } from "../button/button";
 
 export interface Task {
   id: number;
@@ -7,7 +8,7 @@ export interface Task {
 
 @Component({
   selector: 'app-todo-item',
-  imports: [],
+  imports: [Button],
   templateUrl: './todo-item.html',
   styleUrl: './todo-item.css',
 })

@@ -1,8 +1,13 @@
 <h1>ToDo List</h1>
 
+@if (isLoading) {
+<div class="loading">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+} @else {
 <ul class="todo-list">
   @for (task of tasks; track task) {
-  <app-todo-item [task]="task" (delete)="deleteTask(task)"/>
+  <app-todo-item [task]="task" (delete)="deleteTask(task)" />
   }
 </ul>
 
@@ -14,10 +19,10 @@
   (keyup)="textChanged(taskInput.value)"
 />
 
-<button
-  class="button button--add"
-  [disabled]="isTextEmpty"
-  (click)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
->
-  Add
-</button>
+<app-button
+  title="add"
+  (clicked)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
+  [isDisabled]="isTextEmpty"
+  className="button button--add"
+/>
+}
