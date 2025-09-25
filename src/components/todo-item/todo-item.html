@@ -3,8 +3,8 @@
     <p class="todo-item__id">{{ task.id }}</p>
     <p class="todo-item__text">{{ task.text }}</p>
     <app-button
-      Title="Remove"
-      (Clicked)="delete.emit()"
+      title="remove"
+      (clicked)="delete.emit()"
       className="button button--delete"
     />
   </div>

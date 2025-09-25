@@ -7,9 +7,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./button.css'],
 })
 export class Button {
-  @Input() Title: string;
+  @Input() title: string;
   @Input() isDisabled = false;
   @Input() className = '';
 
-  @Output() Clicked = new EventEmitter<void>();
+  @Output() clicked = new EventEmitter<void>();
 }

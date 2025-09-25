@@ -20,8 +20,8 @@
 />
 
 <app-button
-  Title="Add"
-  (Clicked)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
+  title="add"
+  (clicked)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
   [isDisabled]="isTextEmpty"
   className="button button--add"
 />
