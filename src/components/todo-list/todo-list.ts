@@ -25,13 +25,28 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 })
 export class TodoList implements OnInit {
   tasks: Task[] = [
-    { id: 1, text: 'Learn Angular' },
-    { id: 2, text: 'Build an app' },
-    { id: 3, text: 'Deploy to production' },
+    {
+      id: 1,
+      text: 'Learn Angular',
+      description:
+        'Study the official documentation and build sample projects.',
+    },
+    {
+      id: 2,
+      text: 'Build an app',
+      description: 'Create a new Angular application using the CLI.',
+    },
+    {
+      id: 3,
+      text: 'Deploy to production',
+      description: 'Deploy the application to a cloud provider.',
+    },
   ];
 
   isTextEmpty = true;
   isLoading = true;
+  selectedItemId = null;
+  descriptionOutputText = '';
 
   ngOnInit() {
     setTimeout(() => {
@@ -44,11 +59,21 @@ export class TodoList implements OnInit {
     if (!value) return;
 
     const nextId = (this.tasks.at(-1)?.id ?? 0) + 1;
-    this.tasks = [...this.tasks, { id: nextId, text: value, description: description }];
+    this.tasks = [
+      ...this.tasks,
+      { id: nextId, text: value, description: description },
+    ];
   }
 
   deleteTask(task: Task) {
     this.tasks = this.tasks.filter((t) => t !== task);
+  }
+
+  selectTask(task: Task) {
+    this.selectedItemId = task.id;
+    this.descriptionOutputText = task.description
+      ? task.description
+      : '<<No description provided>>';
   }
 
   textChanged(value: string) {

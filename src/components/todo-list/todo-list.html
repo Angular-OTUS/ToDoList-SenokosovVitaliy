@@ -9,7 +9,7 @@
     } @else {
     <ul class="todo-list">
       @for (task of tasks; track task) {
-      <app-todo-item [task]="task" (delete)="deleteTask(task)" />
+      <app-todo-item [task]="task" (deleteItem)="deleteTask(task)" (selectItem)="selectTask(task)" />
       }
     </ul>
 
@@ -46,6 +46,7 @@
       name="description"
       id="description"
       readonly="true"
+      placeholder={{descriptionOutputText}}
     ></textarea>
   </div>
 </div>

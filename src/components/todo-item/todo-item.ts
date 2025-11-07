@@ -15,5 +15,6 @@ export interface Task {
 })
 export class TodoItem {
   @Input() task!: Task;
-  @Output() delete = new EventEmitter<void>();
+  @Output() deleteItem = new EventEmitter<void>();
+  @Output() selectItem = new EventEmitter<void>();
 }

@@ -1,10 +1,10 @@
 <li>
-  <div class="todo-item">
+  <div appSelectListItem class="todo-item" (click)="selectItem.emit()" role="presentation">
     <p class="todo-item__id">{{ task.id }}</p>
     <p class="todo-item__text">{{ task.text }}</p>
     <app-button
       title="remove"
-      (clicked)="delete.emit()"
+      (clicked)="deleteItem.emit()"
       className="button button--delete"
     />
   </div>
