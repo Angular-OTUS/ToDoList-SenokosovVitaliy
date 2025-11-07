@@ -1,2 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+.todo-layout {
+  display: flex;
+  gap: 16px;
+}
+
+.todo-list-container {
+  flex: 1 1 0;
+}
+
+.description-container {
+  flex: 0 0 0;
+  min-width: 280px;
+}
+
+@media (max-width: 900px) {
+  .todo-layout {
+    flex-direction: column;
+  }
+  .description-container {
+    flex-basis: auto;
+    min-width: 0;
+  }
+}

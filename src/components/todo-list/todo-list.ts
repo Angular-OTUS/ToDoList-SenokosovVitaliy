@@ -39,12 +39,12 @@ export class TodoList implements OnInit {
     }, 1000);
   }
 
-  addTask(text: string) {
+  addTask(text: string, description: string) {
     const value = text.trim();
     if (!value) return;
 
     const nextId = (this.tasks.at(-1)?.id ?? 0) + 1;
-    this.tasks = [...this.tasks, { id: nextId, text: value }];
+    this.tasks = [...this.tasks, { id: nextId, text: value, description: description }];
   }
 
   deleteTask(task: Task) {

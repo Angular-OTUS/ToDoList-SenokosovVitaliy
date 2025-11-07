@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Button } from "../button/button";
+import { Button } from '../button/button';
 
 export interface Task {
   id: number;
   text: string;
+  description?: string;
 }
 
 @Component({

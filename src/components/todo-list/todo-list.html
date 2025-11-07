@@ -1,28 +1,51 @@
 <h1>ToDo List</h1>
 
-@if (isLoading) {
-<div class="loading">
-  <mat-spinner diameter="50"></mat-spinner>
+<div class="todo-layout">
+  <div class="todo-list-container">
+    @if (isLoading) {
+    <div class="loading">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    } @else {
+    <ul class="todo-list">
+      @for (task of tasks; track task) {
+      <app-todo-item [task]="task" (delete)="deleteTask(task)" />
+      }
+    </ul>
+
+    <input
+      matInput
+      #taskInput
+      type="text"
+      (keyup.enter)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
+      (keyup)="textChanged(taskInput.value)"
+      placeholder="Task name"
+    />
+
+    <div class="description-container">
+      <textarea
+        #descriptionInput
+        name="description"
+        id="description"
+        placeholder="Task description"
+      ></textarea>
+    </div>
+
+    <app-button
+      title="add"
+      (clicked)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
+      [isDisabled]="isTextEmpty"
+      className="button button--add"
+    />
+    }
+  </div>
+
+  <div class="description-container">
+    <textarea
+      #descriptionOutput
+      name="description"
+      id="description"
+      readonly="true"
+    ></textarea>
+  </div>
 </div>
-} @else {
-<ul class="todo-list">
-  @for (task of tasks; track task) {
-  <app-todo-item [task]="task" (delete)="deleteTask(task)" />
-  }
-</ul>
-
-<input
-  matInput
-  #taskInput
-  type="text"
-  (keyup.enter)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
-  (keyup)="textChanged(taskInput.value)"
-/>
-
-<app-button
-  title="add"
-  (clicked)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
-  [isDisabled]="isTextEmpty"
-  className="button button--add"
-/>
-}
