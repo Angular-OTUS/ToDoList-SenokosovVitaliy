@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Button } from '../button/button';
+import { ShowHintOnHoverDirective } from '../../directives/todo-item-hint.directive'
 
 export interface Task {
   id: number;
@@ -10,7 +11,7 @@ export interface Task {
 
 @Component({
   selector: 'app-todo-item',
-  imports: [Button],
+  imports: [Button, ShowHintOnHoverDirective],
   templateUrl: './todo-item.html',
   styleUrl: './todo-item.css',
 })
