@@ -28,17 +28,20 @@ export class TodoList implements OnInit {
     {
       id: 1,
       text: 'Learn Angular',
+      isSelected: false,
       description:
         'Study the official documentation and build sample projects.',
     },
     {
       id: 2,
       text: 'Build an app',
+      isSelected: false,
       description: 'Create a new Angular application using the CLI.',
     },
     {
       id: 3,
       text: 'Deploy to production',
+      isSelected: false,
       description: 'Deploy the application to a cloud provider.',
     },
   ];
@@ -61,7 +64,7 @@ export class TodoList implements OnInit {
     const nextId = (this.tasks.at(-1)?.id ?? 0) + 1;
     this.tasks = [
       ...this.tasks,
-      { id: nextId, text: value, description: description },
+      { id: nextId, text: value, description: description, isSelected: false },
     ];
   }
 
@@ -74,6 +77,7 @@ export class TodoList implements OnInit {
     this.descriptionOutputText = task.description
       ? task.description
       : '<<No description provided>>';
+    for (const t of this.tasks) t.isSelected = t.id === task.id;
   }
 
   textChanged(value: string) {

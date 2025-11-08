@@ -4,6 +4,7 @@ import { Button } from '../button/button';
 export interface Task {
   id: number;
   text: string;
+  isSelected: boolean;
   description?: string;
 }
 

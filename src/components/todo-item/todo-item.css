@@ -34,3 +34,11 @@
   text-overflow: ellipsis;
   color: #111827;
 }
+
+.todo-item.selected {
+  background-color: gold;
+}
+
+.todo-item:hover {
+  background-color: lemonchiffon;
+}
