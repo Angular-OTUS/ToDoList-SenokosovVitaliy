@@ -1,26 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-
-.todo-layout {
-  display: flex;
-  gap: 16px;
+* {
+  box-sizing: border-box;
 }
 
-.todo-list-container {
-  flex: 1 1 0;
+html {
+  height: 100%;
 }
 
-.description-container {
-  flex: 0 0 0;
-  min-width: 280px;
-}
-
-@media (max-width: 900px) {
-  .todo-layout {
-    flex-direction: column;
-  }
-  .description-container {
-    flex-basis: auto;
-    min-width: 0;
-  }
+body {
+  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle at top left, #181023, #0b0519);
+  color: #c3b3d8;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
