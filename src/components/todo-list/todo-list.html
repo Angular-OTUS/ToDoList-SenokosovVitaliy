@@ -1,5 +1,3 @@
-<h1>ToDo List</h1>
-
 <div class="todo-layout">
   <div class="todo-list-container">
     @if (isLoading) {
@@ -13,40 +11,39 @@
       }
     </ul>
 
-    <input
-      matInput
-      #taskInput
-      type="text"
-      (keyup.enter)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
-      (keyup)="textChanged(taskInput.value)"
-      placeholder="Task name"
-    />
+    <div class="add-task-form">
+      <input
+        class="task-input"
+        #taskInput
+        type="text"
+        (keyup.enter)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
+        (keyup)="textChanged(taskInput.value)"
+        placeholder="Task name"
+      />
 
-    <div class="description-container">
       <textarea
+        class="task-input task-textarea"
         #descriptionInput
-        name="description"
-        id="description"
         placeholder="Task description"
       ></textarea>
-    </div>
 
-    <app-button
-      title="add"
-      hintText="Click to add a new task"
-      (clicked)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
-      [isDisabled]="isTextEmpty"
-      className="button button--add"
-    />
+      <app-button
+        title="add"
+        hintText="Click to add a new task"
+        (clicked)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
+        [isDisabled]="isTextEmpty"
+        className="button button--add"
+      />
+    </div>
     }
   </div>
 
-  <div class="description-container">
-    <textarea
-      #descriptionOutput
-      name="description"
-      id="description"
-      readonly="true"
-    >{{descriptionOutputText}}</textarea>
+  <div class="description-panel">
+    <h3 class="description-panel__title">Task Description</h3>
+    @if (selectedItemId) {
+    <p class="description-panel__text">{{ descriptionOutputText }}</p>
+    } @else {
+    <p class="description-panel__placeholder">Select a task to see its description</p>
+    }
   </div>
 </div>

@@ -1,22 +1,43 @@
 .button {
     color: #fff;
     border: none;
-    border-radius: 6px;
-    padding: 8px 16px;
+    border-radius: 8px;
+    padding: 10px 20px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.1s, opacity 0.2s;
+}
+
+.button:hover {
+    transform: translateY(-1px);
+}
+
+.button:active {
+    transform: translateY(0);
 }
 
 .button--add {
-    background-color: #28a745;
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+}
+
+.button--add:hover {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
 }
 
 .button--add:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
-    background-color: #6c757d;
+    background: #555;
+    transform: none;
 }
 
 .button--delete {
-    background-color: #dc3545;
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    padding: 8px 14px;
+    font-size: 13px;
+}
+
+.button--delete:hover {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
 }

@@ -2,6 +2,9 @@
   list-style-type: none;
   padding-left: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .loading {
@@ -12,23 +15,79 @@
 
 .todo-layout {
   display: flex;
-  gap: 20px;
+  gap: 24px;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .todo-list-container {
   flex: 1;
+  min-width: 0;
 }
 
-.description-container {
-  flex: 1;
+.add-task-form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.description-container textarea {
+.task-input {
   width: 100%;
-  min-height: 150px;
-  padding: 10px;
-  border: 1px solid var(--ui-border, #ccc);
-  border-radius: 8px;
-  resize: vertical;
+  padding: 12px 16px;
+  font-size: 14px;
   font-family: inherit;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.task-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.task-input:focus {
+  border-color: #9b59b6;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.task-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.description-panel {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.description-panel__title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.description-panel__text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #fff;
+}
+
+.description-panel__placeholder {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
 }
