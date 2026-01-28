@@ -45,3 +45,7 @@ Thumbs.db
 
 .angular
 .aider*
+
+# Claude Code
+.claude/
+AGENTS.md
