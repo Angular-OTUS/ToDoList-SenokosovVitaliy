@@ -48,7 +48,7 @@ export class TodoList implements OnInit {
 
   isTextEmpty = true;
   isLoading = true;
-  selectedItemId = null;
+  selectedItemId: number | null = null;
   descriptionOutputText = '';
 
   ngOnInit() {
@@ -69,6 +69,10 @@ export class TodoList implements OnInit {
   }
 
   deleteTask(task: Task) {
+    if (this.selectedItemId === task.id) {
+      this.selectedItemId = null;
+      this.descriptionOutputText = '';
+    }
     this.tasks = this.tasks.filter((t) => t !== task);
   }
 
