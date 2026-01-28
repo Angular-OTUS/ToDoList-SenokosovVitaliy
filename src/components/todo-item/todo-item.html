@@ -1,9 +1,10 @@
 <li>
-  <div appSelectListItem appShowHintOnHover class="todo-item" [hintText]="task.description" [class.selected]="task.isSelected" (click)="selectItem.emit()" role="presentation">
+  <div appShowHintOnHover class="todo-item" [hintText]="task.description" [class.selected]="task.isSelected" (click)="selectItem.emit()" role="presentation">
     <p class="todo-item__id">{{ task.id }}</p>
     <p class="todo-item__text">{{ task.text }}</p>
     <app-button
       title="remove"
+      hintText="Click to remove this task"
       (clicked)="deleteItem.emit()"
       className="button button--delete"
     />

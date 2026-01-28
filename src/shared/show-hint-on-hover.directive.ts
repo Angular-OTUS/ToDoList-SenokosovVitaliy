@@ -5,5 +5,9 @@ import { Directive, HostBinding, Input } from '@angular/core';
 })
 export class ShowHintOnHoverDirective {
   @Input() hintText = '';
-  @HostBinding('title') title = this.hintText;
+
+  @HostBinding('title')
+  get title(): string {
+    return this.hintText;
+  }
 }

@@ -9,3 +9,26 @@
   justify-content: center;
   margin: 1rem;
 }
+
+.todo-layout {
+  display: flex;
+  gap: 20px;
+}
+
+.todo-list-container {
+  flex: 1;
+}
+
+.description-container {
+  flex: 1;
+}
+
+.description-container textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 10px;
+  border: 1px solid var(--ui-border, #ccc);
+  border-radius: 8px;
+  resize: vertical;
+  font-family: inherit;
+}

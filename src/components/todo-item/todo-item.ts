@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Button } from '../button/button';
-import { ShowHintOnHoverDirective } from '../../directives/todo-item-hint.directive'
+import { ShowHintOnHoverDirective } from '../../shared/show-hint-on-hover.directive'
 
 export interface Task {
   id: number;
