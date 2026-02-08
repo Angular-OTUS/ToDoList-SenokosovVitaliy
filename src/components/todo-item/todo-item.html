@@ -7,7 +7,7 @@
       [hintText]="task().description"
       [class.selected]="task().isSelected"
       (click)="selectItem.emit()"
-      (dblclick)="enterEditMode()"
+      (dblclick)="enterEditMode(); $event.stopPropagation()"
       role="presentation"
     >
       <p class="todo-item__id">{{ task().id }}</p>
