@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,6 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { TodoItem, Task } from '../todo-item/todo-item';
 import { Button } from '../button/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TodoService } from '../../services/todo.service';
+import { ToastService } from '../../services/toast.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-todo-list',
@@ -24,27 +27,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './todo-list.css',
 })
 export class TodoList implements OnInit {
-  tasks = signal<Task[]>([
-    {
-      id: 1,
-      text: 'Learn Angular',
-      isSelected: false,
-      description:
-        'Study the official documentation and build sample projects.',
-    },
-    {
-      id: 2,
-      text: 'Build an app',
-      isSelected: false,
-      description: 'Create a new Angular application using the CLI.',
-    },
-    {
-      id: 3,
-      text: 'Deploy to production',
-      isSelected: false,
-      description: 'Deploy the application to a cloud provider.',
-    },
-  ]);
+  private todoService = inject(TodoService);
+  private toastService = inject(ToastService);
+
+  tasks = toSignal(this.todoService.tasks$, { initialValue: [] as Task[] });
 
   isTextEmpty = signal(true);
   isLoading = signal(true);
@@ -61,11 +47,8 @@ export class TodoList implements OnInit {
     const value = text.trim();
     if (!value) return;
 
-    const nextId = (this.tasks().at(-1)?.id ?? 0) + 1;
-    this.tasks.set([
-      ...this.tasks(),
-      { id: nextId, text: value, description: description, isSelected: false },
-    ]);
+    this.todoService.addTask(text, description);
+    this.toastService.showToast('Задача добавлена', 'success');
   }
 
   deleteTask(task: Task) {
@@ -73,7 +56,7 @@ export class TodoList implements OnInit {
       this.selectedItemId.set(null);
       this.descriptionOutputText.set('');
     }
-    this.tasks.set(this.tasks().filter((t) => t !== task));
+    this.todoService.deleteTask(task);
   }
 
   selectTask(task: Task) {
@@ -81,9 +64,12 @@ export class TodoList implements OnInit {
     this.descriptionOutputText.set(
       task.description ? task.description : '<<No description provided>>',
     );
-    this.tasks.update((tasks) =>
-      tasks.map((t) => ({ ...t, isSelected: t.id === task.id })),
-    );
+    this.todoService.selectTask(task.id);
+  }
+
+  updateTask(task: Task, newText: string) {
+    this.todoService.updateTask(task.id, newText);
+    this.toastService.showToast('Задача обновлена', 'success');
   }
 
   textChanged(value: string) {

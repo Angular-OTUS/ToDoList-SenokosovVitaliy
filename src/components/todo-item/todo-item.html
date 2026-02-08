@@ -1,12 +1,47 @@
 <li>
-  <div appShowHintOnHover class="todo-item" [hintText]="task().description" [class.selected]="task().isSelected" (click)="selectItem.emit()" role="presentation">
-    <p class="todo-item__id">{{ task().id }}</p>
-    <p class="todo-item__text">{{ task().text }}</p>
-    <app-button
-      title="remove"
-      hintText="Click to remove this task"
-      (clicked)="deleteItem.emit()"
-      className="button button--delete"
-    />
-  </div>
+  <!-- Display mode -->
+  @if (!isEditing()) {
+    <div
+      appShowHintOnHover
+      class="todo-item"
+      [hintText]="task().description"
+      [class.selected]="task().isSelected"
+      (click)="selectItem.emit()"
+      (dblclick)="enterEditMode()"
+      role="presentation"
+    >
+      <p class="todo-item__id">{{ task().id }}</p>
+      <p class="todo-item__text">{{ task().text }}</p>
+      <app-button
+        title="remove"
+        hintText="Click to remove this task"
+        (clicked)="deleteItem.emit()"
+        className="button button--delete"
+      />
+    </div>
+  }
+
+  <!-- Edit mode -->
+  @if (isEditing()) {
+    <div class="todo-item todo-item--editing">
+      <p class="todo-item__id">{{ task().id }}</p>
+      <input
+        [ngModel]="editText()"
+        (ngModelChange)="editText.set($event)"
+        (keyup.enter)="saveEdit()"
+        (keyup.escape)="cancelEdit()"
+        class="todo-item__edit-input"
+      />
+      <app-button
+        title="save"
+        (clicked)="saveEdit()"
+        className="button button--save"
+      />
+      <app-button
+        title="cancel"
+        (clicked)="cancelEdit()"
+        className="button button--cancel"
+      />
+    </div>
+  }
 </li>

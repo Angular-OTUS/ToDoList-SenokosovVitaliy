@@ -45,3 +45,28 @@
   color: #fff;
   font-size: 15px;
 }
+
+/* Edit mode styles */
+.todo-item--editing {
+  cursor: default;
+}
+
+.todo-item__edit-input {
+  flex: 1;
+  min-width: 0;
+  margin: 0 12px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.todo-item__edit-input:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #9b59b6;
+}
