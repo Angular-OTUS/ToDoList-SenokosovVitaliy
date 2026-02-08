@@ -18,16 +18,18 @@ export interface Task {
 })
 export class TodoItem {
   task = input.required<Task>();
+  isEditing = input(false);
   deleteItem = output<void>();
   selectItem = output<void>();
+  startEdit = output<void>();
   editItem = output<string>();
+  cancelEdit = output<void>();
 
-  isEditing = signal(false);
   editText = signal('');
 
   enterEditMode(): void {
-    this.isEditing.set(true);
     this.editText.set(this.task().text);
+    this.startEdit.emit();
   }
 
   saveEdit(): void {
@@ -35,11 +37,9 @@ export class TodoItem {
     if (trimmed) {
       this.editItem.emit(trimmed);
     }
-    this.isEditing.set(false);
   }
 
-  cancelEdit(): void {
-    this.isEditing.set(false);
-    this.editText.set('');
+  onCancelEdit(): void {
+    this.cancelEdit.emit();
   }
 }

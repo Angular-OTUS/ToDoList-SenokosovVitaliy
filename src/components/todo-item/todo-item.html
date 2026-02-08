@@ -29,7 +29,7 @@
         [ngModel]="editText()"
         (ngModelChange)="editText.set($event)"
         (keyup.enter)="saveEdit()"
-        (keyup.escape)="cancelEdit()"
+        (keyup.escape)="onCancelEdit()"
         class="todo-item__edit-input"
       />
       <app-button
@@ -39,7 +39,7 @@
       />
       <app-button
         title="cancel"
-        (clicked)="cancelEdit()"
+        (clicked)="onCancelEdit()"
         className="button button--cancel"
       />
     </div>

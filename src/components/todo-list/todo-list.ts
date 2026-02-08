@@ -36,6 +36,7 @@ export class TodoList implements OnInit {
   isLoading = signal(true);
   selectedItemId = signal<number | null>(null);
   descriptionOutputText = signal('');
+  editingTaskId = signal<number | null>(null);
 
   ngOnInit() {
     setTimeout(() => {
@@ -65,11 +66,21 @@ export class TodoList implements OnInit {
       task.description ? task.description : '<<No description provided>>',
     );
     this.todoService.selectTask(task.id);
+    this.editingTaskId.set(null);
+  }
+
+  startEditTask(task: Task) {
+    this.editingTaskId.set(task.id);
   }
 
   updateTask(task: Task, newText: string) {
     this.todoService.updateTask(task.id, newText);
     this.toastService.showToast('Задача обновлена', 'success');
+    this.editingTaskId.set(null);
+  }
+
+  cancelEditTask() {
+    this.editingTaskId.set(null);
   }
 
   textChanged(value: string) {
