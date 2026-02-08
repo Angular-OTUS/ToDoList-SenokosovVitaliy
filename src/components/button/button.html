@@ -1,1 +1,1 @@
-<button appShowHintOnHover [hintText]="hintText" [class]="className" [disabled]="isDisabled" (click)="clicked.emit(); $event.stopPropagation()">{{ title }}</button>
+<button appShowHintOnHover [hintText]="hintText()" [class]="className()" [disabled]="isDisabled()" (click)="clicked.emit(); $event.stopPropagation()">{{ title() }}</button>

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ShowHintOnHoverDirective } from '../../shared/show-hint-on-hover.directive';
 
 @Component({
@@ -8,10 +8,10 @@ import { ShowHintOnHoverDirective } from '../../shared/show-hint-on-hover.direct
   styleUrls: ['./button.css'],
 })
 export class Button {
-  @Input() title: string;
-  @Input() isDisabled = false;
-  @Input() className = '';
-  @Input() hintText = '';
+  title = input('');
+  isDisabled = input(false);
+  className = input('');
+  hintText = input('');
 
-  @Output() clicked = new EventEmitter<void>();
+  clicked = output<void>();
 }

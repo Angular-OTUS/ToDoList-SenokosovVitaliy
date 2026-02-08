@@ -1,13 +1,11 @@
-import { Directive, HostBinding, Input } from '@angular/core';
+import { Directive, input } from '@angular/core';
 
 @Directive({
   selector: '[appShowHintOnHover]',
+  host: {
+    '[title]': 'hintText()',
+  },
 })
 export class ShowHintOnHoverDirective {
-  @Input() hintText = '';
-
-  @HostBinding('title')
-  get title(): string {
-    return this.hintText;
-  }
+  hintText = input('');
 }

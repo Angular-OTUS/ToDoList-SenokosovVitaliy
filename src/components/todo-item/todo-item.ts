@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Button } from '../button/button';
-import { ShowHintOnHoverDirective } from '../../shared/show-hint-on-hover.directive'
+import { ShowHintOnHoverDirective } from '../../shared/show-hint-on-hover.directive';
 
 export interface Task {
   id: number;
@@ -16,7 +16,7 @@ export interface Task {
   styleUrl: './todo-item.css',
 })
 export class TodoItem {
-  @Input() task!: Task;
-  @Output() deleteItem = new EventEmitter<void>();
-  @Output() selectItem = new EventEmitter<void>();
+  task = input.required<Task>();
+  deleteItem = output<void>();
+  selectItem = output<void>();
 }
