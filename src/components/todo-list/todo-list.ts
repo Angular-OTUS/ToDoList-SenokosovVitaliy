@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,35 +24,69 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './todo-list.css',
 })
 export class TodoList implements OnInit {
-  tasks: Task[] = [
-    { id: 1, text: 'Learn Angular' },
-    { id: 2, text: 'Build an app' },
-    { id: 3, text: 'Deploy to production' },
-  ];
+  tasks = signal<Task[]>([
+    {
+      id: 1,
+      text: 'Learn Angular',
+      isSelected: false,
+      description:
+        'Study the official documentation and build sample projects.',
+    },
+    {
+      id: 2,
+      text: 'Build an app',
+      isSelected: false,
+      description: 'Create a new Angular application using the CLI.',
+    },
+    {
+      id: 3,
+      text: 'Deploy to production',
+      isSelected: false,
+      description: 'Deploy the application to a cloud provider.',
+    },
+  ]);
 
-  isTextEmpty = true;
-  isLoading = true;
+  isTextEmpty = signal(true);
+  isLoading = signal(true);
+  selectedItemId = signal<number | null>(null);
+  descriptionOutputText = signal('');
 
   ngOnInit() {
     setTimeout(() => {
-      this.isLoading = false;
+      this.isLoading.set(false);
     }, 1000);
   }
 
-  addTask(text: string) {
+  addTask(text: string, description: string) {
     const value = text.trim();
     if (!value) return;
 
-    const nextId = (this.tasks.at(-1)?.id ?? 0) + 1;
-    this.tasks = [...this.tasks, { id: nextId, text: value }];
+    const nextId = (this.tasks().at(-1)?.id ?? 0) + 1;
+    this.tasks.set([
+      ...this.tasks(),
+      { id: nextId, text: value, description: description, isSelected: false },
+    ]);
   }
 
   deleteTask(task: Task) {
-    this.tasks = this.tasks.filter((t) => t !== task);
+    if (this.selectedItemId() === task.id) {
+      this.selectedItemId.set(null);
+      this.descriptionOutputText.set('');
+    }
+    this.tasks.set(this.tasks().filter((t) => t !== task));
+  }
+
+  selectTask(task: Task) {
+    this.selectedItemId.set(task.id);
+    this.descriptionOutputText.set(
+      task.description ? task.description : '<<No description provided>>',
+    );
+    this.tasks.update((tasks) =>
+      tasks.map((t) => ({ ...t, isSelected: t.id === task.id })),
+    );
   }
 
   textChanged(value: string) {
-    this.isTextEmpty = value.trim().length == 0;
-    console.log(this.isTextEmpty);
+    this.isTextEmpty.set(value.trim().length === 0);
   }
 }

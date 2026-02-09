@@ -44,3 +44,8 @@ Thumbs.db
 .github/instructions/nx.instructions.md
 
 .angular
+.aider*
+
+# Claude Code
+.claude/
+AGENTS.md

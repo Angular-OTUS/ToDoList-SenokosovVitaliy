@@ -1,28 +1,49 @@
-<h1>ToDo List</h1>
+<div class="todo-layout">
+  <div class="todo-list-container">
+    @if (isLoading()) {
+    <div class="loading">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    } @else {
+    <ul class="todo-list">
+      @for (task of tasks(); track task.id) {
+      <app-todo-item [task]="task" (deleteItem)="deleteTask(task)" (selectItem)="selectTask(task)" />
+      }
+    </ul>
 
-@if (isLoading) {
-<div class="loading">
-  <mat-spinner diameter="50"></mat-spinner>
+    <div class="add-task-form">
+      <input
+        class="task-input"
+        #taskInput
+        type="text"
+        (keyup.enter)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
+        (keyup)="textChanged(taskInput.value)"
+        placeholder="Task name"
+      />
+
+      <textarea
+        class="task-input task-textarea"
+        #descriptionInput
+        placeholder="Task description"
+      ></textarea>
+
+      <app-button
+        title="add"
+        hintText="Click to add a new task"
+        (clicked)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
+        [isDisabled]="isTextEmpty()"
+        className="button button--add"
+      />
+    </div>
+    }
+  </div>
+
+  <div class="description-panel">
+    <h3 class="description-panel__title">Task Description</h3>
+    @if (selectedItemId()) {
+    <p class="description-panel__text">{{ descriptionOutputText() }}</p>
+    } @else {
+    <p class="description-panel__placeholder">Select a task to see its description</p>
+    }
+  </div>
 </div>
-} @else {
-<ul class="todo-list">
-  @for (task of tasks; track task) {
-  <app-todo-item [task]="task" (delete)="deleteTask(task)" />
-  }
-</ul>
-
-<input
-  matInput
-  #taskInput
-  type="text"
-  (keyup.enter)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
-  (keyup)="textChanged(taskInput.value)"
-/>
-
-<app-button
-  title="add"
-  (clicked)="addTask(taskInput.value); taskInput.value=''; textChanged('')"
-  [isDisabled]="isTextEmpty"
-  className="button button--add"
-/>
-}
