@@ -11,10 +11,10 @@
 | Styling          | SCSS (global) + CSS (components)         |
 | Testing          | Jest 29.7.0 (unit) + Playwright 1.36.0 (e2e) |
 | Linting          | ESLint 9.8 (flat config) + Prettier      |
-| State Management | Local component state (no NgRx/signals)  |
+| State Management | Signals (no NgRx)                        |
 | Routing          | Configured but empty (single-page)       |
 | SSR              | @angular/ssr configured, Express backend |
-| Git Branch       | homework-4 (main: main)                  |
+| Git Branch       | homework-5 (main: main)                  |
 
 ## Commands
 
@@ -42,7 +42,11 @@ src/
 │   ├── header/        # Title display (selector: app-header)
 │   ├── todo-item/     # Single task row (selector: app-todo-item)
 │   ├── todo-list/     # Main task manager (selector: app-todo-list)
+│   ├── toasts/        # Toast notifications (selector: app-toasts)
 │   └── user/          # User profile placeholder (selector: app-user)
+├── services/
+│   ├── todo.service.ts   # Task CRUD via BehaviorSubject
+│   └── toast.service.ts  # Toast notification state
 ├── shared/
 │   └── show-hint-on-hover.directive.ts  # Tooltip directive (selector: [appShowHintOnHover])
 ├── assets/
@@ -61,8 +65,9 @@ e2e/
 App
 ├── Header          — static title "ToDo List"
 ├── User            — placeholder, underdeveloped
+├── Toasts          — toast notification overlay
 └── TodoList        — main logic container
-    ├── TodoItem[]  — *ngFor loop, @Output deleteItem/selectItem
+    ├── TodoItem[]  — @for loop, output deleteItem/selectItem
     │   └── Button  — delete action
     └── Button      — add action
 ```
@@ -80,29 +85,73 @@ interface Task {
 
 ## State (TodoList component)
 
-- `tasks: Task[]` — task array (immutable updates)
-- `isTextEmpty: boolean` — input validation
-- `isLoading: boolean` — simulated loading (setTimeout)
-- `selectedItemId: number | null` — selected task
-- `descriptionOutputText: string` — description display
+- `tasks` — signal derived from `TodoService.tasks$` via `toSignal()`
+- `isTextEmpty` — signal for input validation
+- `isLoading` — signal for simulated loading (setTimeout)
+- `selectedItemId` — signal for selected task id
+- `descriptionOutputText` — signal for description display
+- `editingTaskId` — signal for currently edited task id
 
-No services, no persistence, no API calls. Data resets on refresh.
+No persistence, no API calls. Data resets on refresh.
 
 ## Component Communication
 
-- **Parent → Child:** `@Input()` properties
-- **Child → Parent:** `@Output()` + `EventEmitter`
-- Button: `@Input() text`, `@Output() clicked`
-- TodoItem: `@Input() task/isSelected`, `@Output() deleteItem/selectItem`
+- **Parent → Child:** `input()` functions
+- **Child → Parent:** `output()` functions
+- Button: `input() text`, `output() clicked`
+- TodoItem: `input() task / isSelected`, `output() deleteItem / selectItem`
 
 ## Conventions
 
 - Selector prefix: `app-` (components), `app` camelCase (directives)
-- All components are **standalone** (no NgModules)
-- Template-driven forms (FormsModule, no ReactiveFormsModule)
+- All components are standalone — do NOT set `standalone: true` (it is the default in Angular v20+)
+- `ChangeDetectionStrategy.OnPush` on every component
+- Reactive forms preferred over template-driven
+- Native control flow: `@if`, `@for`, `@switch` — never `*ngIf` / `*ngFor` / `*ngSwitch`
+- Class bindings instead of `ngClass`; style bindings instead of `ngStyle`
+- `inject()` instead of constructor injection
+- Host bindings inside `host: {}` object — never `@HostBinding` / `@HostListener`
+- `NgOptimizedImage` for all static images
 - BEM-like CSS classes (e.g. `.description-panel__title`)
 - ESLint: flat config (`eslint.config.mjs`)
 - Prettier: single quotes
+
+## Angular & TypeScript Best Practices
+
+### TypeScript
+- Strict type checking enabled — never disable
+- Prefer type inference when type is obvious
+- Avoid `any`; use `unknown` when type is uncertain
+
+### Components
+- Keep components small and focused on a single responsibility
+- Use `input()` and `output()` functions instead of `@Input()` / `@Output()` decorators
+- Use `computed()` for derived state — never recompute manually
+- Always set `changeDetection: ChangeDetectionStrategy.OnPush`
+- Prefer Reactive forms over template-driven
+
+### State
+- Use signals for local component state
+- Use `computed()` for derived values
+- Keep state transformations pure
+- Use `.set()` or `.update()` on signals — never `.mutate()`
+
+### Services
+- Single responsibility per service
+- Always use `providedIn: 'root'` for singletons
+- Use `inject()` — no constructor injection
+- Mutate state via dedicated methods only (e.g. `addTask`, `deleteTask(id)`)
+- Filter / find by `id` — never by object reference
+
+### Templates
+- Use native control flow (`@if`, `@for`, `@switch`)
+- Use async pipe for observables
+- Keep templates free of complex logic — move it to the component class or a `computed()`
+- Do not use globals like `new Date()` in templates
+
+### Accessibility
+- All components must pass AXE checks
+- Follow WCAG AA: focus management, color contrast ≥ 4.5:1, ARIA attributes
 
 ## Design Theme
 
@@ -115,14 +164,20 @@ No services, no persistence, no API calls. Data resets on refresh.
 
 ## Build Budgets (Production)
 
-- Initial bundle: warning 500kb / error 1mb
-- Component styles: warning 4kb / error 8kb
+- Initial bundle: warning 500 kb / error 1 mb
+- Component styles: warning 4 kb / error 8 kb
+
+## Self-Review Checklist (required before every final answer)
+
+- Re-read all written code before submitting
+- Check consistency: if neighbouring methods follow a pattern (e.g. filter by `id`), the new method must follow the same pattern
+- Verify that variables declared for data processing (e.g. `const value = text.trim()`) are actually used everywhere they should be — not the original unprocessed values
+- When a service method signature changes, immediately update all call sites
 
 ## Current Gaps
 
 - No unit tests written (setup exists, 0 spec files)
 - No routing (appRoutes is empty)
-- No services or API layer
 - No persistent storage (localStorage / backend)
 - User component is a placeholder
 - No form validation framework

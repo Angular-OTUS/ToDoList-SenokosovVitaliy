@@ -57,9 +57,9 @@ export class TodoService {
     this.tasksSubject.next(updatedTasks);
   }
 
-  deleteTask(taskToDelete: Task): void {
+  deleteTask(id: number): void {
     const tasks = this.tasksSubject.value;
-    this.tasksSubject.next(tasks.filter((t) => t !== taskToDelete));
+    this.tasksSubject.next(tasks.filter((t) => t.id !== id));
   }
 
   selectTask(taskId: number): void {

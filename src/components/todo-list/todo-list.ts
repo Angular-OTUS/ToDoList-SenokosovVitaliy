@@ -48,7 +48,7 @@ export class TodoList implements OnInit {
     const value = text.trim();
     if (!value) return;
 
-    this.todoService.addTask(text, description);
+    this.todoService.addTask(value, description);
     this.toastService.showToast('Задача добавлена', 'success');
   }
 
@@ -57,7 +57,7 @@ export class TodoList implements OnInit {
       this.selectedItemId.set(null);
       this.descriptionOutputText.set('');
     }
-    this.todoService.deleteTask(task);
+    this.todoService.deleteTask(task.id);
   }
 
   selectTask(task: Task) {
