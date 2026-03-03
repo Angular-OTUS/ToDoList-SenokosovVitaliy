@@ -41,3 +41,23 @@
 .button--delete:hover {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
+
+.button--save {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    padding: 8px 14px;
+    font-size: 13px;
+}
+
+.button--save:hover {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.button--cancel {
+    background: linear-gradient(135deg, #555, #666);
+    padding: 8px 14px;
+    font-size: 13px;
+}
+
+.button--cancel:hover {
+    background: linear-gradient(135deg, #666, #555);
+}

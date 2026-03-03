@@ -7,7 +7,15 @@
     } @else {
     <ul class="todo-list">
       @for (task of tasks(); track task.id) {
-      <app-todo-item [task]="task" (deleteItem)="deleteTask(task)" (selectItem)="selectTask(task)" />
+      <app-todo-item
+        [task]="task"
+        [isEditing]="editingTaskId() === task.id"
+        (deleteItem)="deleteTask(task)"
+        (selectItem)="selectTask(task)"
+        (startEdit)="startEditTask(task)"
+        (editItem)="updateTask(task, $event)"
+        (cancelEdit)="cancelEditTask()"
+      />
       }
     </ul>
 
