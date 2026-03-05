@@ -36,12 +36,11 @@
       ></textarea>
 
       <app-button
-        title="add"
         hintText="Click to add a new task"
         (clicked)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
         [isDisabled]="isTextEmpty()"
         className="button button--add"
-      />
+      >add</app-button>
     </div>
     }
   </div>
