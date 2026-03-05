@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { TodoItem, Task } from '../todo-item/todo-item';
 import { Button } from '../button/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Spinner } from '../spinner/spinner';
 import { TodoService } from '../../services/todo.service';
 import { ToastService } from '../../services/toast.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -21,7 +21,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     MatButtonModule,
     TodoItem,
     Button,
-    MatProgressSpinnerModule,
+    Spinner,
   ],
   templateUrl: './todo-list.html',
   styleUrl: './todo-list.css',

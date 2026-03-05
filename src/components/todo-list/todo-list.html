@@ -1,9 +1,7 @@
 <div class="todo-layout">
   <div class="todo-list-container">
     @if (isLoading()) {
-    <div class="loading">
-      <mat-spinner diameter="50"></mat-spinner>
-    </div>
+    <app-spinner />
     } @else {
     <ul class="todo-list">
       @for (task of tasks(); track task.id) {
