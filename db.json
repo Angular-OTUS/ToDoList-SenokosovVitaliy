@@ -3,13 +3,13 @@
     {
       "id": 1,
       "text": "Learn Angular",
-      "status": "InProgress",
+      "status": "Completed",
       "description": "Study the official documentation and build sample projects."
     },
     {
       "id": 2,
       "text": "Build an app",
-      "status": "InProgress",
+      "status": "Completed",
       "description": "Create a new Angular application using the CLI."
     },
     {
@@ -17,6 +17,60 @@
       "text": "Deploy to production",
       "status": "InProgress",
       "description": "Deploy the application to a cloud provider."
+    },
+    {
+      "id": 4,
+      "text": "Set up routing",
+      "status": "Completed",
+      "description": "Configure Angular Router with lazy-loaded feature modules."
+    },
+    {
+      "id": 5,
+      "text": "Add unit tests",
+      "status": "InProgress",
+      "description": "Write Jest unit tests for all services and components."
+    },
+    {
+      "id": 6,
+      "text": "Integrate Angular Material",
+      "status": "Completed",
+      "description": "Install and configure Angular Material with a custom theme."
+    },
+    {
+      "id": 7,
+      "text": "Implement HTTP interceptor",
+      "status": "InProgress",
+      "description": "Add a global HTTP interceptor for auth headers and error handling."
+    },
+    {
+      "id": 8,
+      "text": "Set up CI/CD pipeline",
+      "status": "InProgress",
+      "description": "Configure GitHub Actions to run lint, test and build on every push."
+    },
+    {
+      "id": 9,
+      "text": "Write E2E tests",
+      "status": "InProgress",
+      "description": "Cover critical user flows with Playwright end-to-end tests."
+    },
+    {
+      "id": 10,
+      "text": "Optimize bundle size",
+      "status": "InProgress",
+      "description": "Analyze the production bundle and apply lazy loading and tree shaking."
+    },
+    {
+      "id": 11,
+      "text": "Add accessibility support",
+      "status": "InProgress",
+      "description": "Ensure all components pass WCAG AA checks using AXE."
+    },
+    {
+      "id": 12,
+      "text": "Implement dark theme",
+      "status": "Completed",
+      "description": "Create a dark color palette and apply it globally via SCSS variables."
     }
   ]
 }
