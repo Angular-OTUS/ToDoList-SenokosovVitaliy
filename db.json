@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "Learn Angular",
+      "status": "InProgress",
+      "description": "Study the official documentation and build sample projects."
+    },
+    {
+      "id": 2,
+      "text": "Build an app",
+      "status": "InProgress",
+      "description": "Create a new Angular application using the CLI."
+    },
+    {
+      "id": 3,
+      "text": "Deploy to production",
+      "status": "InProgress",
+      "description": "Deploy the application to a cloud provider."
+    }
+  ]
+}
