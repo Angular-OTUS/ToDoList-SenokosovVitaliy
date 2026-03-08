@@ -30,29 +30,7 @@
       }
     </ul>
 
-    <div class="add-task-form">
-      <input
-        class="task-input"
-        #taskInput
-        type="text"
-        (keyup.enter)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
-        (keyup)="textChanged(taskInput.value)"
-        placeholder="Task name"
-      />
-
-      <textarea
-        class="task-input task-textarea"
-        #descriptionInput
-        placeholder="Task description"
-      ></textarea>
-
-      <app-button
-        hintText="Click to add a new task"
-        (clicked)="addTask(taskInput.value, descriptionInput.value); taskInput.value=''; descriptionInput.value=''; textChanged('')"
-        [isDisabled]="isTextEmpty()"
-        className="button button--add"
-      >add</app-button>
-    </div>
+    <app-todo-create-item (createItem)="addTask($event.text, $event.description)" />
     }
   </div>
 

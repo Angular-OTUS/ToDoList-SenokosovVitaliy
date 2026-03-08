@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TodoItem, Task, TaskStatus } from '../todo-item/todo-item';
-import { Button } from '../button/button';
+import { TodoCreateItem } from '../todo-create-item/todo-create-item';
 import { Spinner } from '../spinner/spinner';
 import { TodoService } from '../../services/todo.service';
 import { ToastService } from '../../services/toast.service';
@@ -22,7 +22,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     MatButtonModule,
     MatButtonToggleModule,
     TodoItem,
-    Button,
+    TodoCreateItem,
     Spinner,
   ],
   templateUrl: './todo-list.html',
@@ -34,7 +34,6 @@ export class TodoList implements OnInit {
 
   tasks = toSignal(this.todoService.tasks$, { initialValue: [] as Task[] });
 
-  isTextEmpty = signal(true);
   isLoading = signal(true);
   selectedItemId = signal<number | null>(null);
   descriptionOutputText = signal('');
@@ -98,7 +97,4 @@ export class TodoList implements OnInit {
     this.todoService.updateTaskStatus(task.id, status);
   }
 
-  textChanged(value: string) {
-    this.isTextEmpty.set(value.trim().length === 0);
-  }
 }

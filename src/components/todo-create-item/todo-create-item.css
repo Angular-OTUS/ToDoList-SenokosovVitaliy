@@ -1,0 +1,34 @@
+.create-item-form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+
+.task-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.task-input:focus {
+  border-color: #9b59b6;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.task-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
