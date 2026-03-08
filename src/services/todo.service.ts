@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, switchMap } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { BehaviorSubject, Observable, combineLatest, of, switchMap } from 'rxjs';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { Task, TaskStatus } from '../components/todo-item/todo-item';
-import { TaskApiService } from './task-api.service';
+import { TaskApiService, ServerTask } from './task-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,9 @@ export class TodoService {
   private selectedId$ = new BehaviorSubject<number | null>(null);
 
   private serverTasks$ = this.refresh$.pipe(
-    switchMap(() => this.apiService.getAll()),
+    switchMap(() =>
+      this.apiService.getAll().pipe(catchError(() => of([] as ServerTask[]))),
+    ),
     shareReplay(1),
   );
 
