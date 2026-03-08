@@ -1,10 +1,11 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { TodoItem, Task } from '../todo-item/todo-item';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { TodoItem, Task, TaskStatus } from '../todo-item/todo-item';
 import { Button } from '../button/button';
 import { Spinner } from '../spinner/spinner';
 import { TodoService } from '../../services/todo.service';
@@ -19,6 +20,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatButtonToggleModule,
     TodoItem,
     Button,
     Spinner,
@@ -37,6 +39,12 @@ export class TodoList implements OnInit {
   selectedItemId = signal<number | null>(null);
   descriptionOutputText = signal('');
   editingTaskId = signal<number | null>(null);
+  activeFilter = signal<TaskStatus | null>(null);
+  selectedTask = computed(() => this.tasks().find((t) => t.id === this.selectedItemId()) ?? null);
+  filteredTasks = computed(() => {
+    const filter = this.activeFilter();
+    return filter === null ? this.tasks() : this.tasks().filter((t) => t.status === filter);
+  });
 
   ngOnInit() {
     setTimeout(() => {
@@ -81,6 +89,13 @@ export class TodoList implements OnInit {
 
   cancelEditTask() {
     this.editingTaskId.set(null);
+  }
+
+  updateTaskStatus(completed: boolean) {
+    const task = this.selectedTask();
+    if (!task) return;
+    const status: TaskStatus = completed ? 'Completed' : 'InProgress';
+    this.todoService.updateTaskStatus(task.id, status);
   }
 
   textChanged(value: string) {

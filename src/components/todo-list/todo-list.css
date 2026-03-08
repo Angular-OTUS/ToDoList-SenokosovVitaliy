@@ -1,3 +1,30 @@
+.filter-bar {
+  margin-bottom: 12px;
+}
+
+.filter-toggle-group {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.filter-toggle-group ::ng-deep .mat-button-toggle {
+  color: rgba(255, 255, 255, 0.6);
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.filter-toggle-group ::ng-deep .mat-button-toggle-checked {
+  background: rgba(155, 89, 182, 0.35);
+  color: #fff;
+}
+
+.filter-toggle-group ::ng-deep .mat-button-toggle-button {
+  font-family: inherit;
+  font-size: 13px;
+}
+
 .todo-list {
   list-style-type: none;
   padding-left: 0;
@@ -84,4 +111,25 @@
   font-size: 14px;
   color: rgba(255, 255, 255, 0.4);
   font-style: italic;
+}
+
+.description-panel__status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+.description-panel__status-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #27ae60;
+  cursor: pointer;
+}
+
+.description-panel__status-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  user-select: none;
 }

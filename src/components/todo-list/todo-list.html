@@ -3,8 +3,21 @@
     @if (isLoading()) {
     <app-spinner />
     } @else {
+    <div class="filter-bar">
+      <mat-button-toggle-group
+        class="filter-toggle-group"
+        [value]="activeFilter()"
+        (change)="activeFilter.set($event.value)"
+        hideSingleSelectionIndicator
+      >
+        <mat-button-toggle [value]="null">All</mat-button-toggle>
+        <mat-button-toggle value="InProgress">In Progress</mat-button-toggle>
+        <mat-button-toggle value="Completed">Completed</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
     <ul class="todo-list">
-      @for (task of tasks(); track task.id) {
+      @for (task of filteredTasks(); track task.id) {
       <app-todo-item
         [task]="task"
         [isEditing]="editingTaskId() === task.id"
@@ -45,8 +58,17 @@
 
   <div class="description-panel">
     <h3 class="description-panel__title">Task Description</h3>
-    @if (selectedItemId()) {
+    @if (selectedTask()) {
     <p class="description-panel__text">{{ descriptionOutputText() }}</p>
+    <label class="description-panel__status">
+      <input
+        type="checkbox"
+        class="description-panel__status-checkbox"
+        [checked]="selectedTask()!.status === 'Completed'"
+        (change)="updateTaskStatus($any($event.target).checked)"
+      />
+      <span class="description-panel__status-label">Completed</span>
+    </label>
     } @else {
     <p class="description-panel__placeholder">Select a task to see its description</p>
     }
