@@ -1,0 +1,17 @@
+  <div class="description-panel">
+    <h3 class="description-panel__title">Task Description</h3>
+    @if (selectedTask()) {
+    <p class="description-panel__text">{{ descriptionText() }}</p>
+    <label class="description-panel__status">
+      <input
+        type="checkbox"
+        class="description-panel__status-checkbox"
+        [checked]="selectedTask().status === 'Completed'"
+        (change)="onStatusChanged($event)"
+      />
+      <span class="description-panel__status-label">Completed</span>
+    </label>
+    } @else {
+    <p class="description-panel__placeholder">Select a task to see its description</p>
+    }
+  </div>

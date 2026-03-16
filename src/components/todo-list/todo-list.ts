@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TodoItem, Task, TaskStatus } from '../todo-item/todo-item';
 import { TodoCreateItem } from '../todo-create-item/todo-create-item';
@@ -6,6 +6,7 @@ import { Spinner } from '../spinner/spinner';
 import { TodoService } from '../../services/todo.service';
 import { ToastService } from '../../services/toast.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { TodoItemView } from "../todo-item-view/todo-item-view";
 
 @Component({
   selector: 'app-todo-list',
@@ -14,9 +15,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
     TodoItem,
     TodoCreateItem,
     Spinner,
-  ],
+    TodoItemView,
+],
   templateUrl: './todo-list.html',
   styleUrl: './todo-list.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoList {
   private todoService = inject(TodoService);
@@ -80,10 +83,9 @@ export class TodoList {
     this.editingTaskId.set(null);
   }
 
-  updateTaskStatus(completed: boolean) {
+  updateTaskStatus(status: TaskStatus) {
     const task = this.selectedTask();
     if (!task) return;
-    const status: TaskStatus = completed ? 'Completed' : 'InProgress';
     this.todoService.updateTaskStatus(task.id, status).subscribe({
       error: () => this.toastService.showToast('Ошибка при обновлении статуса', 'error'),
     });
