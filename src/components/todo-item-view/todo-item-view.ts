@@ -1,10 +1,14 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  input,
-  output,
+  inject,
+  computed,
 } from '@angular/core';
-import { Task, TaskStatus } from '../todo-item/todo-item';
+import { ActivatedRoute } from '@angular/router';
+import { TodoService } from '../../services/todo.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Task } from '../todo-item/todo-item';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-todo-item-view',
@@ -14,12 +18,18 @@ import { Task, TaskStatus } from '../todo-item/todo-item';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoItemView {
-  selectedTask = input<Task>();
-  descriptionText = input<string>();
-  statusChanged = output<TaskStatus>();
+  route = inject(ActivatedRoute);
+  service = inject(TodoService);
+
+  id = toSignal(this.route.paramMap.pipe(map((p) => p.get('id'))));
+  tasks = toSignal(this.service.tasks$, { initialValue: [] as Task[] });
+  task = computed(() => this.tasks().find((t) => t.id === Number(this.id())));
 
   onStatusChanged(event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
-    this.statusChanged.emit(isChecked ? 'Completed' : 'InProgress');
+    this.service.updateTaskStatus(
+      Number(this.id()),
+      isChecked ? 'Completed' : 'InProgress',
+    );
   }
 }

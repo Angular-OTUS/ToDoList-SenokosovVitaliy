@@ -36,9 +36,5 @@
     }
   </div>
 
-  <app-todo-item-view
-    [selectedTask]="selectedTask()"
-    [descriptionText]="descriptionOutputText()"
-    (statusChanged)="updateTaskStatus($event)"
-  />
+  <router-outlet />
 </div>
