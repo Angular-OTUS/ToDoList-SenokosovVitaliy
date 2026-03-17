@@ -3,10 +3,11 @@ import {
   ChangeDetectionStrategy,
   inject,
   computed,
+  DestroyRef,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TodoService } from '../../services/todo.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { Task } from '../todo-item/todo-item';
 import { map } from 'rxjs';
 
@@ -18,6 +19,7 @@ import { map } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoItemView {
+  private readonly destroyRef = inject(DestroyRef);
   route = inject(ActivatedRoute);
   service = inject(TodoService);
 
@@ -27,9 +29,12 @@ export class TodoItemView {
 
   onStatusChanged(event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
-    this.service.updateTaskStatus(
-      Number(this.id()),
-      isChecked ? 'Completed' : 'InProgress',
-    );
+    this.service
+      .updateTaskStatus(
+        Number(this.id()),
+        isChecked ? 'Completed' : 'InProgress',
+      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 }
