@@ -1,1 +1,1 @@
-<button appShowHintOnHover [hintText]="hintText()" [class]="className()" [disabled]="isDisabled()" (click)="clicked.emit(); $event.stopPropagation()"><ng-content /></button>
+<button [type]="type()" appShowHintOnHover [hintText]="hintText()" [class]="className()" [disabled]="isDisabled()" (click)="clicked.emit(); $event.stopPropagation()"><ng-content /></button>

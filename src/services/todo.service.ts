@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, of, switchMap } from 'rxjs';
-import { catchError, map, shareReplay } from 'rxjs/operators';
+import { Injectable, inject, signal } from '@angular/core';
+import { BehaviorSubject, EMPTY, Observable, combineLatest, of, switchMap } from 'rxjs';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { Task, TaskStatus } from '../components/todo-item/todo-item';
 import { TaskApiService, ServerTask } from './task-api.service';
 
@@ -13,10 +13,14 @@ export class TodoService {
   private refresh$ = new BehaviorSubject<void>(undefined);
   private selectedId$ = new BehaviorSubject<number | null>(null);
 
+  readonly isLoading = signal(true);
+
   private serverTasks$ = this.refresh$.pipe(
+    tap(() => this.isLoading.set(true)),
     switchMap(() =>
       this.apiService.getAll().pipe(catchError(() => of([] as ServerTask[]))),
     ),
+    tap(() => this.isLoading.set(false)),
     shareReplay(1),
   );
 
@@ -27,26 +31,24 @@ export class TodoService {
     shareReplay(1),
   );
 
-  addTask(text: string, description: string): void {
+  addTask(text: string, description: string): Observable<ServerTask> {
     const value = text.trim();
-    if (!value) return;
-
-    this.apiService.create(value, description).subscribe(() => this.refresh$.next());
+    if (!value) return EMPTY;
+    return this.apiService.create(value, description).pipe(tap(() => this.refresh$.next()));
   }
 
-  updateTask(id: number, text: string): void {
+  updateTask(id: number, text: string): Observable<ServerTask> {
     const value = text.trim();
-    if (!value) return;
-
-    this.apiService.update(id, { text: value }).subscribe(() => this.refresh$.next());
+    if (!value) return EMPTY;
+    return this.apiService.update(id, { text: value }).pipe(tap(() => this.refresh$.next()));
   }
 
-  deleteTask(id: number): void {
-    this.apiService.delete(id).subscribe(() => this.refresh$.next());
+  deleteTask(id: number): Observable<void> {
+    return this.apiService.delete(id).pipe(tap(() => this.refresh$.next()));
   }
 
-  updateTaskStatus(id: number, status: TaskStatus): void {
-    this.apiService.update(id, { status }).subscribe(() => this.refresh$.next());
+  updateTaskStatus(id: number, status: TaskStatus): Observable<ServerTask> {
+    return this.apiService.update(id, { status }).pipe(tap(() => this.refresh$.next()));
   }
 
   selectTask(taskId: number): void {

@@ -1,9 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, computed, inject, signal } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TodoItem, Task, TaskStatus } from '../todo-item/todo-item';
 import { TodoCreateItem } from '../todo-create-item/todo-create-item';
@@ -15,11 +10,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-todo-list',
   imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
     MatButtonToggleModule,
     TodoItem,
     TodoCreateItem,
@@ -28,13 +18,13 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './todo-list.html',
   styleUrl: './todo-list.css',
 })
-export class TodoList implements OnInit {
+export class TodoList {
   private todoService = inject(TodoService);
   private toastService = inject(ToastService);
 
   tasks = toSignal(this.todoService.tasks$, { initialValue: [] as Task[] });
 
-  isLoading = signal(true);
+  readonly isLoading = this.todoService.isLoading;
   selectedItemId = signal<number | null>(null);
   descriptionOutputText = signal('');
   editingTaskId = signal<number | null>(null);
@@ -45,26 +35,24 @@ export class TodoList implements OnInit {
     return filter === null ? this.tasks() : this.tasks().filter((t) => t.status === filter);
   });
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.isLoading.set(false);
-    }, 1000);
-  }
-
   addTask(text: string, description: string) {
-    const value = text.trim();
-    if (!value) return;
-
-    this.todoService.addTask(value, description);
-    this.toastService.showToast('Задача добавлена', 'success');
+    this.todoService.addTask(text, description).subscribe({
+      next: () => this.toastService.showToast('Задача добавлена', 'success'),
+      error: () => this.toastService.showToast('Ошибка при добавлении задачи', 'error'),
+    });
   }
 
   deleteTask(task: Task) {
-    if (this.selectedItemId() === task.id) {
-      this.selectedItemId.set(null);
-      this.descriptionOutputText.set('');
-    }
-    this.todoService.deleteTask(task.id);
+    this.todoService.deleteTask(task.id).subscribe({
+      next: () => {
+        if (this.selectedItemId() === task.id) {
+          this.selectedItemId.set(null);
+          this.descriptionOutputText.set('');
+        }
+        this.toastService.showToast('Задача удалена', 'success');
+      },
+      error: () => this.toastService.showToast('Ошибка при удалении задачи', 'error'),
+    });
   }
 
   selectTask(task: Task) {
@@ -81,9 +69,11 @@ export class TodoList implements OnInit {
   }
 
   updateTask(task: Task, newText: string) {
-    this.todoService.updateTask(task.id, newText);
-    this.toastService.showToast('Задача обновлена', 'success');
     this.editingTaskId.set(null);
+    this.todoService.updateTask(task.id, newText).subscribe({
+      next: () => this.toastService.showToast('Задача обновлена', 'success'),
+      error: () => this.toastService.showToast('Ошибка при обновлении задачи', 'error'),
+    });
   }
 
   cancelEditTask() {
@@ -94,7 +84,9 @@ export class TodoList implements OnInit {
     const task = this.selectedTask();
     if (!task) return;
     const status: TaskStatus = completed ? 'Completed' : 'InProgress';
-    this.todoService.updateTaskStatus(task.id, status);
+    this.todoService.updateTaskStatus(task.id, status).subscribe({
+      error: () => this.toastService.showToast('Ошибка при обновлении статуса', 'error'),
+    });
   }
 
 }

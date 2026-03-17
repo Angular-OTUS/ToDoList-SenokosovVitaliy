@@ -8,6 +8,7 @@ import { ShowHintOnHoverDirective } from '../../shared/show-hint-on-hover.direct
   styleUrls: ['./button.css'],
 })
 export class Button {
+  type = input<'button' | 'submit' | 'reset'>('button');
   isDisabled = input(false);
   className = input('');
   hintText = input('');

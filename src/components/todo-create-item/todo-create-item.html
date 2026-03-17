@@ -4,7 +4,6 @@
     formControlName="name"
     type="text"
     placeholder="Task name"
-    (keyup.enter)="submit()"
   />
 
   <textarea
@@ -14,8 +13,8 @@
   ></textarea>
 
   <app-button
+    type="submit"
     hintText="Click to add a new task"
-    (clicked)="submit()"
     [isDisabled]="form.invalid"
     className="button button--add"
   >add</app-button>
