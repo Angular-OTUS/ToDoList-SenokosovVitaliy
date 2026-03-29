@@ -1,73 +1,57 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Task } from '../components/todo-item/todo-item';
+import { Injectable, inject, signal } from '@angular/core';
+import { BehaviorSubject, EMPTY, Observable, combineLatest, of, switchMap } from 'rxjs';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
+import { Task, TaskStatus } from '../components/todo-item/todo-item';
+import { TaskApiService, ServerTask } from './task-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
-  private tasksSubject = new BehaviorSubject<Task[]>([
-    {
-      id: 1,
-      text: 'Learn Angular',
-      isSelected: false,
-      description:
-        'Study the official documentation and build sample projects.',
-    },
-    {
-      id: 2,
-      text: 'Build an app',
-      isSelected: false,
-      description: 'Create a new Angular application using the CLI.',
-    },
-    {
-      id: 3,
-      text: 'Deploy to production',
-      isSelected: false,
-      description: 'Deploy the application to a cloud provider.',
-    },
-  ]);
+  private apiService = inject(TaskApiService);
 
-  tasks$: Observable<Task[]> = this.tasksSubject.asObservable();
+  private refresh$ = new BehaviorSubject<void>(undefined);
+  private selectedId$ = new BehaviorSubject<number | null>(null);
 
-  getTasks(): Task[] {
-    return this.tasksSubject.value;
-  }
+  readonly isLoading = signal(true);
 
-  addTask(text: string, description: string): void {
+  private serverTasks$ = this.refresh$.pipe(
+    tap(() => this.isLoading.set(true)),
+    switchMap(() =>
+      this.apiService.getAll().pipe(catchError(() => of([] as ServerTask[]))),
+    ),
+    tap(() => this.isLoading.set(false)),
+    shareReplay(1),
+  );
+
+  tasks$: Observable<Task[]> = combineLatest([this.serverTasks$, this.selectedId$]).pipe(
+    map(([tasks, selectedId]) =>
+      tasks.map((t) => ({ ...t, isSelected: t.id === selectedId })),
+    ),
+    shareReplay(1),
+  );
+
+  addTask(text: string, description: string): Observable<ServerTask> {
     const value = text.trim();
-    if (!value) return;
-
-    const tasks = this.tasksSubject.value;
-    const nextId = (tasks.at(-1)?.id ?? 0) + 1;
-    this.tasksSubject.next([
-      ...tasks,
-      { id: nextId, text: value, description: description, isSelected: false },
-    ]);
+    if (!value) return EMPTY;
+    return this.apiService.create(value, description).pipe(tap(() => this.refresh$.next()));
   }
 
-  updateTask(id: number, text: string): void {
+  updateTask(id: number, text: string): Observable<ServerTask> {
     const value = text.trim();
-    if (!value) return;
-
-    const tasks = this.tasksSubject.value;
-    const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, text: value } : task,
-    );
-    this.tasksSubject.next(updatedTasks);
+    if (!value) return EMPTY;
+    return this.apiService.update(id, { text: value }).pipe(tap(() => this.refresh$.next()));
   }
 
-  deleteTask(id: number): void {
-    const tasks = this.tasksSubject.value;
-    this.tasksSubject.next(tasks.filter((t) => t.id !== id));
+  deleteTask(id: number): Observable<void> {
+    return this.apiService.delete(id).pipe(tap(() => this.refresh$.next()));
+  }
+
+  updateTaskStatus(id: number, status: TaskStatus): Observable<ServerTask> {
+    return this.apiService.update(id, { status }).pipe(tap(() => this.refresh$.next()));
   }
 
   selectTask(taskId: number): void {
-    const tasks = this.tasksSubject.value;
-    const updatedTasks = tasks.map((task) => ({
-      ...task,
-      isSelected: task.id === taskId,
-    }));
-    this.tasksSubject.next(updatedTasks);
+    this.selectedId$.next(taskId);
   }
 }

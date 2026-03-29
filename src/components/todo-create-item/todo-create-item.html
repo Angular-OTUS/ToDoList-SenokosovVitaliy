@@ -1,0 +1,21 @@
+<form class="create-item-form" [formGroup]="form" (ngSubmit)="submit()">
+  <input
+    class="task-input"
+    formControlName="name"
+    type="text"
+    placeholder="Task name"
+  />
+
+  <textarea
+    class="task-input task-textarea"
+    formControlName="description"
+    placeholder="Task description"
+  ></textarea>
+
+  <app-button
+    type="submit"
+    hintText="Click to add a new task"
+    [isDisabled]="form.invalid"
+    className="button button--add"
+  >add</app-button>
+</form>

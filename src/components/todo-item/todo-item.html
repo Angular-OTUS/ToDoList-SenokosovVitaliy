@@ -13,11 +13,10 @@
       <p class="todo-item__id">{{ task().id }}</p>
       <p class="todo-item__text">{{ task().text }}</p>
       <app-button
-        title="remove"
         hintText="Click to remove this task"
         (clicked)="deleteItem.emit()"
         className="button button--delete"
-      />
+      >remove</app-button>
     </div>
   }
 
@@ -33,15 +32,13 @@
         class="todo-item__edit-input"
       />
       <app-button
-        title="save"
         (clicked)="saveEdit()"
         className="button button--save"
-      />
+      >save</app-button>
       <app-button
-        title="cancel"
         (clicked)="onCancelEdit()"
         className="button button--cancel"
-      />
+      >cancel</app-button>
     </div>
   }
 </li>
