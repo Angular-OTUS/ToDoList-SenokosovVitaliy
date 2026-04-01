@@ -20,8 +20,8 @@ import { map } from 'rxjs';
 })
 export class TodoItemView {
   private readonly destroyRef = inject(DestroyRef);
-  route = inject(ActivatedRoute);
-  service = inject(TodoService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly service = inject(TodoService);
 
   id = toSignal(this.route.paramMap.pipe(map((p) => p.get('id'))));
   tasks = toSignal(this.service.tasks$, { initialValue: [] as Task[] });

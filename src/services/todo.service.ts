@@ -30,7 +30,7 @@ export class TodoService {
       ),
     ),
     tap(() => this.isLoading.set(false)),
-    shareReplay(1),
+    shareReplay({ bufferSize: 1, refCount: true }),
   );
 
   tasks$: Observable<Task[]> = combineLatest([
@@ -40,7 +40,7 @@ export class TodoService {
     map(([tasks, selectedId]) =>
       tasks.map((t) => ({ ...t, isSelected: t.id === selectedId })),
     ),
-    shareReplay(1),
+    shareReplay({ bufferSize: 1, refCount: true }),
   );
 
   addTask(text: string, description: string): Observable<ServerTask> {
