@@ -12,9 +12,9 @@
 | Testing          | Jest 29.7.0 (unit) + Playwright 1.36.0 (e2e) |
 | Linting          | ESLint 9.8 (flat config) + Prettier      |
 | State Management | Signals (no NgRx)                        |
-| Routing          | Configured but empty (single-page)       |
-| SSR              | @angular/ssr configured, Express backend |
-| Git Branch       | homework-5 (main: main)                  |
+| Routing          | Active — /tasks and /tasks/:id (lazy-loaded) |
+| SSR              | Packages installed; not active (outputMode: static, no server.ts) |
+| Git Branch       | homework-7 (main: main)                  |
 
 ## Commands
 
@@ -36,17 +36,21 @@ src/
 ├── app/
 │   ├── app.ts / app.html / app.scss    # Root component (selector: app-root)
 │   ├── app.config.ts                   # provideRouter, provideAnimations, provideHttpClient, provideZone
-│   └── app.routes.ts                   # appRoutes — empty array
+│   └── app.routes.ts                   # appRoutes — /tasks (TodoList) + /tasks/:id (TodoItemView child)
 ├── components/
 │   ├── button/        # Reusable button (selector: app-button)
 │   ├── header/        # Title display (selector: app-header)
-│   ├── todo-item/     # Single task row (selector: app-todo-item)
+│   ├── spinner/       # Loading spinner (selector: app-spinner)
+│   ├── todo-item/     # Single task row (selector: app-todo-item) — also defines Task, TaskStatus types
+│   ├── todo-item-view/ # Task detail / status update (selector: app-todo-item-view)
+│   ├── todo-create-item/ # Create-task form (selector: app-todo-create-item)
 │   ├── todo-list/     # Main task manager (selector: app-todo-list)
 │   ├── toasts/        # Toast notifications (selector: app-toasts)
 │   └── user/          # User profile placeholder (selector: app-user)
 ├── services/
-│   ├── todo.service.ts   # Task CRUD via BehaviorSubject
-│   └── toast.service.ts  # Toast notification state
+│   ├── todo.service.ts      # Task state + CRUD orchestration (refresh$ pattern)
+│   ├── task-api.service.ts  # HTTP client for json-server API
+│   └── toast.service.ts     # Toast notification state
 ├── shared/
 │   └── show-hint-on-hover.directive.ts  # Tooltip directive (selector: [appShowHintOnHover])
 ├── assets/
@@ -66,10 +70,13 @@ App
 ├── Header          — static title "ToDo List"
 ├── User            — placeholder, underdeveloped
 ├── Toasts          — toast notification overlay
-└── TodoList        — main logic container
-    ├── TodoItem[]  — @for loop, output deleteItem/selectItem
-    │   └── Button  — delete action
-    └── Button      — add action
+└── RouterOutlet → TodoList  — main logic container (lazy, /tasks)
+    ├── Spinner     — shown while isLoading()
+    ├── mat-button-toggle-group  — All/InProgress/Completed filter
+    ├── TodoItem[]  — @for filteredTasks, outputs: deleteItem/selectItem/editItem
+    │   └── Button  — delete/save/cancel actions
+    ├── TodoCreateItem  — create form, output: createItem
+    └── RouterOutlet → TodoItemView  — task detail (lazy, /tasks/:id)
 ```
 
 ## Data Model
@@ -78,21 +85,21 @@ App
 interface Task {
   id: number;
   text: string;
-  isSelected: boolean;
+  isSelected: boolean;  // derived; not persisted to API
   description?: string;
+  status: TaskStatus;   // 'InProgress' | 'Completed'
 }
 ```
 
 ## State (TodoList component)
 
 - `tasks` — signal derived from `TodoService.tasks$` via `toSignal()`
-- `isTextEmpty` — signal for input validation
-- `isLoading` — signal for simulated loading (setTimeout)
-- `selectedItemId` — signal for selected task id
-- `descriptionOutputText` — signal for description display
+- `isLoading` — signal from `TodoService.isLoading` (set by RxJS tap in service)
 - `editingTaskId` — signal for currently edited task id
+- `activeFilter` — signal for current status filter (null | TaskStatus)
+- `filteredTasks` — computed signal filtering tasks by activeFilter
 
-No persistence, no API calls. Data resets on refresh.
+State is persisted to json-server at localhost:3000. Data resets only if db.json is reset.
 
 ## Component Communication
 
@@ -177,7 +184,7 @@ No persistence, no API calls. Data resets on refresh.
 ## Current Gaps
 
 - No unit tests written (setup exists, 0 spec files)
-- No routing (appRoutes is empty)
-- No persistent storage (localStorage / backend)
 - User component is a placeholder
-- No form validation framework
+- No form validation framework beyond Validators.required
+- isSelected highlighting broken: TodoList.selectTask() navigates but does not call todoService.selectTask()
+- Status update (TodoItemView) has no error handling or toast feedback
