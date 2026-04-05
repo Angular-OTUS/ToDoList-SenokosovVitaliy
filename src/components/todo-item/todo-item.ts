@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Button } from '../button/button';
 import { ShowHintOnHoverDirective } from '../../shared/show-hint-on-hover.directive';
 
-export type TaskStatus = 'InProgress' | 'Completed';
+export type TaskStatus = 'ToDo' | 'InProgress' | 'Completed';
 
 export interface Task {
   id: number;
