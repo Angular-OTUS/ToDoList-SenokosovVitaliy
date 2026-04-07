@@ -40,6 +40,15 @@ npm start
 | `npx nx lint` | Run ESLint |
 | `npx nx e2e` | Run E2E tests (Playwright) |
 
+## Routing
+
+| Path | Component | Description |
+|------|-----------|-------------|
+| `/` | — | Redirects to `/tasks` |
+| `/tasks` | `TodoList` | Task list (lazy-loaded) |
+| `/tasks/:id` | `TodoItemView` | Task detail view (lazy-loaded, child route) |
+| `**` | — | Redirects to `/tasks` |
+
 ## API
 
 JSON Server exposes a REST API from `db.json`:
