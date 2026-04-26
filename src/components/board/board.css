@@ -1,0 +1,28 @@
+.board {
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+}
+
+.board-column {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.board-column p {
+  color: #8e7ca8;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.task-card {
+  background: #221a2e;
+  color: #c3b3d8;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
