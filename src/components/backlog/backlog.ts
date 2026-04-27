@@ -16,7 +16,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-todo-list',
+  selector: 'app-backlog',
   imports: [
     MatButtonToggleModule,
     TodoItem,
@@ -24,11 +24,11 @@ import { Router, RouterOutlet } from '@angular/router';
     Spinner,
     RouterOutlet,
   ],
-  templateUrl: './todo-list.html',
-  styleUrl: './todo-list.css',
+  templateUrl: './backlog.html',
+  styleUrl: './backlog.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoList {
+export class Backlog {
   private todoService = inject(TodoService);
   private toastService = inject(ToastService);
   private router = inject(Router);
@@ -47,22 +47,30 @@ export class TodoList {
   });
 
   addTask(text: string, description: string) {
-    this.todoService.addTask(text, description).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: () => this.toastService.showToast('Задача добавлена', 'success'),
-      error: () => this.toastService.showToast('Ошибка при добавлении задачи', 'error'),
-    });
+    this.todoService
+      .addTask(text, description)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => this.toastService.showToast('Задача добавлена', 'success'),
+        error: () =>
+          this.toastService.showToast('Ошибка при добавлении задачи', 'error'),
+      });
   }
 
   deleteTask(task: Task) {
-    this.todoService.deleteTask(task.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: () => this.toastService.showToast('Задача удалена', 'success'),
-      error: () => this.toastService.showToast('Ошибка при удалении задачи', 'error'),
-    });
+    this.todoService
+      .deleteTask(task.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => this.toastService.showToast('Задача удалена', 'success'),
+        error: () =>
+          this.toastService.showToast('Ошибка при удалении задачи', 'error'),
+      });
   }
 
   selectTask(task: Task) {
     this.editingTaskId.set(null);
-    this.router.navigate(['/tasks', task.id]);
+    this.router.navigate(['/backlog', task.id]);
   }
 
   startEditTask(task: Task) {
@@ -71,10 +79,14 @@ export class TodoList {
 
   updateTask(task: Task, newText: string) {
     this.editingTaskId.set(null);
-    this.todoService.updateTask(task.id, newText).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: () => this.toastService.showToast('Задача обновлена', 'success'),
-      error: () => this.toastService.showToast('Ошибка при обновлении задачи', 'error'),
-    });
+    this.todoService
+      .updateTask(task.id, newText)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => this.toastService.showToast('Задача обновлена', 'success'),
+        error: () =>
+          this.toastService.showToast('Ошибка при обновлении задачи', 'error'),
+      });
   }
 
   cancelEditTask() {

@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from "../components/header/header";
-import { User as User } from "../components/user/user";
-import { Toasts } from "../components/toasts/toasts.component";
+import { Toasts } from '../components/toasts/toasts.component';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  imports: [RouterOutlet, Header, User, Toasts],
+  imports: [RouterOutlet, Toasts, RouterLink, RouterLinkActive],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
-  protected title = 'todo-list';
+  protected title = 'TasksBoard';
 }

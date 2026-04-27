@@ -5,7 +5,7 @@ export const appRoutes: Route[] = [
   {
     path: 'backlog',
     loadComponent: () =>
-      import('../components/todo-list/todo-list').then((m) => m.TodoList),
+      import('../components/backlog/backlog').then((m) => m.Backlog),
     children: [
       {
         path: ':id',
