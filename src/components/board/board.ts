@@ -1,27 +1,41 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { map } from 'rxjs';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+
 import { TodoService } from '../../services/todo.service';
-import { AsyncPipe } from '@angular/common';
+import { Spinner } from '../spinner/spinner';
+import { Task, TaskStatus } from '../todo-item/todo-item';
+
+interface BoardColumn {
+  title: string;
+  status: TaskStatus;
+}
 
 @Component({
   selector: 'app-board',
-  imports: [AsyncPipe],
+  imports: [Spinner],
   templateUrl: './board.html',
   styleUrl: './board.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Board {
-  taskService = inject(TodoService);
+  private readonly taskService = inject(TodoService);
 
-  toDoTasks$ = this.taskService.tasks$.pipe(
-    map((tasks) => tasks.filter((task) => task.status === 'ToDo')),
-  );
+  private readonly tasks = toSignal(this.taskService.tasks$, {
+    initialValue: [] as Task[],
+  });
 
-  inProgressTasks$ = this.taskService.tasks$.pipe(
-    map((tasks) => tasks.filter((task) => task.status === 'InProgress')),
-  );
+  protected readonly isLoading = this.taskService.isLoading;
 
-  doneTasks$ = this.taskService.tasks$.pipe(
-    map((tasks) => tasks.filter((task) => task.status === 'Completed')),
+  private readonly columnDefs: readonly BoardColumn[] = [
+    { title: 'To Do', status: 'ToDo' },
+    { title: 'In Progress', status: 'InProgress' },
+    { title: 'Done', status: 'Completed' },
+  ];
+
+  protected readonly columns = computed(() =>
+    this.columnDefs.map((col) => ({
+      ...col,
+      tasks: this.tasks().filter((t) => t.status === col.status),
+    })),
   );
 }

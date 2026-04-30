@@ -1,7 +1,8 @@
 import { Component, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Button } from '../button/button';
+
 import { ShowHintOnHoverDirective } from '../../shared/show-hint-on-hover.directive';
+import { Button } from '../button/button';
 
 export type TaskStatus = 'ToDo' | 'InProgress' | 'Completed';
 

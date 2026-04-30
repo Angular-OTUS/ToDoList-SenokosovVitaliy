@@ -1,19 +1,20 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   computed,
+  DestroyRef,
   inject,
   signal,
 } from '@angular/core';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { TodoItem, Task, TaskStatus } from '../todo-item/todo-item';
-import { TodoCreateItem } from '../todo-create-item/todo-create-item';
-import { Spinner } from '../spinner/spinner';
-import { TodoService } from '../../services/todo.service';
-import { ToastService } from '../../services/toast.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Router, RouterOutlet } from '@angular/router';
+
+import { ToastService } from '../../services/toast.service';
+import { TodoService } from '../../services/todo.service';
+import { Spinner } from '../spinner/spinner';
+import { TodoCreateItem } from '../todo-create-item/todo-create-item';
+import { Task, TaskStatus,TodoItem } from '../todo-item/todo-item';
 
 @Component({
   selector: 'app-backlog',

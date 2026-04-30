@@ -1,14 +1,16 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+
 import {
   BehaviorSubject,
- EMPTY, Observable,
   combineLatest,
+ EMPTY, Observable,
   of,
   switchMap,
 } from 'rxjs';
 import { catchError, map, shareReplay, tap } from 'rxjs/operators';
+
 import { Task, TaskStatus } from '../components/todo-item/todo-item';
-import { TaskApiService, ServerTask } from './task-api.service';
+import { ServerTask,TaskApiService } from './task-api.service';
 
 @Injectable({
   providedIn: 'root',

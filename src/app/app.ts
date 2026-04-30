@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Toasts } from '../components/toasts/toasts.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
+import { Toasts } from '../components/toasts/toasts.component';
 
 @Component({
   imports: [RouterOutlet, Toasts, RouterLink, RouterLinkActive],

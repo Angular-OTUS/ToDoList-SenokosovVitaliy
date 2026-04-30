@@ -1,27 +1,17 @@
 <div class="page">
   <h2>Board</h2>
+  @if (isLoading()) {
+  <app-spinner />
+  } @else {
   <div class="board">
-    @if (toDoTasks$ | async; as toDoTasks) {
+    @for (col of columns(); track col.status) {
     <div class="board-column">
-      <p>To Do {{ toDoTasks.length }}</p>
-      @for (t of toDoTasks; track t.id) {
-      <div class="task-card">{{ t.text }}</div>
-      }
-    </div>
-    } @if (inProgressTasks$ | async; as inProgressTasks) {
-    <div class="board-column">
-      <p>In Progress {{ inProgressTasks.length }}</p>
-      @for (t of inProgressTasks; track t.id) {
-      <div class="task-card">{{ t.text }}</div>
-      }
-    </div>
-    } @if (doneTasks$ | async; as doneTasks) {
-    <div class="board-column">
-      <p>Done {{ doneTasks.length }}</p>
-      @for (t of doneTasks; track t.id) {
+      <p>{{ col.title }} {{ col.tasks.length }}</p>
+      @for (t of col.tasks; track t.id) {
       <div class="task-card">{{ t.text }}</div>
       }
     </div>
     }
   </div>
+  }
 </div>
