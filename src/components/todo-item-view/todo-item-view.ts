@@ -1,15 +1,17 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  inject,
+  Component,
   computed,
   DestroyRef,
+  inject,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TodoService } from '../../services/todo.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { Task } from '../todo-item/todo-item';
+import { ActivatedRoute } from '@angular/router';
+
 import { map } from 'rxjs';
+
+import { TodoService } from '../../services/todo.service';
+import { Task } from '../todo-item/todo-item';
 
 @Component({
   selector: 'app-todo-item-view',

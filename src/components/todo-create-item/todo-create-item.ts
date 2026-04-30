@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy, output } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, output } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { Button } from '../button/button';
 
 export interface CreateTaskPayload {

@@ -1,4 +1,5 @@
 import nx from '@nx/eslint-plugin';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 export default [
   ...nx.configs['flat/base'],
@@ -18,8 +19,29 @@ export default [
       '**/*.cjs',
       '**/*.mjs',
     ],
-    // Override or add rules here
-    rules: {},
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
+    rules: {
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            // Side-effect imports
+            ['^\\u0000'],
+            // Angular packages
+            ['^@angular(/.*|$)'],
+            // Other third-party packages
+            ['^@?\\w'],
+            // Project absolute imports / aliases
+            ['^'],
+            // Relative imports
+            ['^\\.'],
+          ],
+        },
+      ],
+      'simple-import-sort/exports': 'error',
+    },
   },
   ...nx.configs['flat/angular'],
   ...nx.configs['flat/angular-template'],

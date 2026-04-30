@@ -38,13 +38,11 @@
   display: flex;
   gap: 24px;
   padding: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
 }
 
 .todo-list-container {
-  flex: 1;
-  min-width: 0;
+  width: 400px;
+  flex-shrink: 0;
 }
 
 .add-task-form {
@@ -79,4 +77,9 @@
 .task-textarea {
   min-height: 80px;
   resize: vertical;
+}
+
+.detail-panel {
+  flex: 1;
+  min-width: 0;
 }

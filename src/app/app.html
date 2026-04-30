@@ -1,12 +1,13 @@
-<app-header />
-
-<main>
-  <ul id="users">
-    <li>
-      <app-user />
-    </li>
-  </ul>
-</main>
-
-<router-outlet />
+<div class="layout">
+  <aside class="sidebar">
+    <h1>Tasks Board</h1>
+    <nav class="nav">
+      <a routerLink="/backlog" routerLinkActive="active">Backlog</a>
+      <a routerLink="/board" routerLinkActive="active">Board</a>
+    </nav>
+  </aside>
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>
 <app-toasts />

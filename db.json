@@ -71,6 +71,24 @@
       "text": "Implement dark theme",
       "status": "Completed",
       "description": "Create a dark color palette and apply it globally via SCSS variables."
+    },
+    {
+      "id": 13,
+      "text": "Design system setup",
+      "status": "ToDo",
+      "description": "Define color tokens, typography scale and spacing guidelines."
+    },
+    {
+      "id": 14,
+      "text": "API documentation",
+      "status": "ToDo",
+      "description": "Document all REST endpoints using OpenAPI/Swagger."
+    },
+    {
+      "id": 15,
+      "text": "Code review process",
+      "status": "ToDo",
+      "description": "Establish pull request templates and review guidelines for the team."
     }
   ]
 }
