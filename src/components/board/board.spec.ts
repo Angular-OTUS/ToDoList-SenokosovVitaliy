@@ -1,5 +1,6 @@
 import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { provideTranslateService } from '@ngx-translate/core';
 
 import { Board } from './board';
