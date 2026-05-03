@@ -3,19 +3,21 @@
     class="task-input"
     formControlName="name"
     type="text"
-    placeholder="Task name"
+    [placeholder]="'createTask.namePlaceholder' | translate"
+    [attr.aria-label]="'createTask.namePlaceholder' | translate"
   />
 
   <textarea
     class="task-input task-textarea"
     formControlName="description"
-    placeholder="Task description"
+    [placeholder]="'createTask.descriptionPlaceholder' | translate"
+    [attr.aria-label]="'createTask.descriptionPlaceholder' | translate"
   ></textarea>
 
   <app-button
     type="submit"
-    hintText="Click to add a new task"
+    [hintText]="'createTask.addHint' | translate"
     [isDisabled]="form.invalid"
     className="button button--add"
-  >add</app-button>
+  >{{ 'createTask.addButton' | translate }}</app-button>
 </form>

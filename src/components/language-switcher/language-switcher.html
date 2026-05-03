@@ -1,0 +1,13 @@
+<mat-button-toggle-group
+  class="lang-toggle-group"
+  [value]="current()"
+  (change)="change($event.value)"
+  hideSingleSelectionIndicator
+  [attr.aria-label]="'language.label' | translate"
+>
+  @for (lang of languages(); track lang) {
+    <mat-button-toggle [value]="lang">
+      {{ 'language.' + lang | translate }}
+    </mat-button-toggle>
+  }
+</mat-button-toggle-group>

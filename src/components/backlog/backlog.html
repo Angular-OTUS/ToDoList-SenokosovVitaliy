@@ -1,5 +1,5 @@
 <div class="page">
-  <h2>Backlog</h2>
+  <h2>{{ 'backlog.title' | translate }}</h2>
   <div class="todo-layout">
     <div class="todo-list-container">
       @if (isLoading()) {
@@ -12,10 +12,10 @@
           (change)="activeFilter.set($event.value)"
           hideSingleSelectionIndicator
         >
-          <mat-button-toggle [value]="null">All</mat-button-toggle>
-          <mat-button-toggle value="InProgress">In Progress</mat-button-toggle>
-          <mat-button-toggle value="Completed">Completed</mat-button-toggle>
-          <mat-button-toggle value="ToDo">To Do</mat-button-toggle>
+          <mat-button-toggle [value]="null">{{ 'filter.all' | translate }}</mat-button-toggle>
+          <mat-button-toggle value="InProgress">{{ 'filter.inProgress' | translate }}</mat-button-toggle>
+          <mat-button-toggle value="Completed">{{ 'filter.completed' | translate }}</mat-button-toggle>
+          <mat-button-toggle value="ToDo">{{ 'filter.todo' | translate }}</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
 

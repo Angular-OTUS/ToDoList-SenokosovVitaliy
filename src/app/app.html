@@ -1,13 +1,19 @@
-<div class="layout">
-  <aside class="sidebar">
-    <h1>Tasks Board</h1>
-    <nav class="nav">
-      <a routerLink="/backlog" routerLinkActive="active">Backlog</a>
-      <a routerLink="/board" routerLinkActive="active">Board</a>
-    </nav>
-  </aside>
-  <main class="content">
-    <router-outlet />
-  </main>
+<div class="shell">
+  <header class="topbar">
+    <h1 class="topbar__title">{{ 'app.title' | translate }}</h1>
+    <app-language-switcher class="topbar__lang" />
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="nav">
+        <a routerLink="/backlog" routerLinkActive="active">{{ 'nav.backlog' | translate }}</a>
+        <a routerLink="/board" routerLinkActive="active">{{ 'nav.board' | translate }}</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
 </div>
 <app-toasts />

@@ -1,0 +1,57 @@
+{
+  "app": {
+    "title": "Доска задач"
+  },
+  "nav": {
+    "backlog": "Бэклог",
+    "board": "Доска"
+  },
+  "filter": {
+    "all": "Все",
+    "inProgress": "В работе",
+    "completed": "Завершённые",
+    "todo": "К выполнению"
+  },
+  "board": {
+    "title": "Доска",
+    "columns": {
+      "todo": "К выполнению",
+      "inProgress": "В работе",
+      "done": "Готово"
+    }
+  },
+  "backlog": {
+    "title": "Бэклог"
+  },
+  "todoItem": {
+    "remove": "удалить",
+    "save": "сохранить",
+    "cancel": "отмена",
+    "removeHint": "Нажмите, чтобы удалить задачу"
+  },
+  "createTask": {
+    "namePlaceholder": "Название задачи",
+    "descriptionPlaceholder": "Описание задачи",
+    "addButton": "добавить",
+    "addHint": "Нажмите, чтобы добавить задачу"
+  },
+  "details": {
+    "title": "Описание задачи",
+    "completed": "Завершено",
+    "placeholder": "Выберите задачу, чтобы увидеть её описание"
+  },
+  "toasts": {
+    "taskAdded": "Задача добавлена",
+    "taskAddError": "Ошибка при добавлении задачи",
+    "taskDeleted": "Задача удалена",
+    "taskDeleteError": "Ошибка при удалении задачи",
+    "taskUpdated": "Задача обновлена",
+    "taskUpdateError": "Ошибка при обновлении задачи",
+    "close": "Закрыть"
+  },
+  "language": {
+    "label": "Язык",
+    "en": "EN",
+    "ru": "RU"
+  }
+}

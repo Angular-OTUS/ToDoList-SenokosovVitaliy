@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { Toast, ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-toasts',
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './toasts.component.html',
   styleUrl: './toasts.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

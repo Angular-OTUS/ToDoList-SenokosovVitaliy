@@ -1,12 +1,39 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  background-color: #0f0a18;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.topbar__title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #c3b3d8;
+}
+
+.topbar__lang {
+  display: inline-flex;
+}
+
 .content {
   flex: 1;
   min-width: 0;
+  overflow: auto;
 }
 
 .layout {
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  flex: 1;
+  min-height: 0;
 }
 
 .sidebar {
