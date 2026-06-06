@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 
 import { BehaviorSubject, combineLatest, EMPTY, Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, finalize, map, tap } from 'rxjs/operators';
 
 import { Task, TaskStatus } from '../components/todo-item/todo-item';
 import { ServerTask, TaskApiService } from './task-api.service';
@@ -26,23 +26,13 @@ export class TodoService {
     ),
   );
 
-  get tasks(): Task[] {
-    const selectedId = this.selectedId$.value;
-    return this._tasks$.value.map((t) => ({
-      ...t,
-      isSelected: t.id === selectedId,
-    }));
-  }
-
   loadTasks(): Observable<ServerTask[]> {
     this.isLoading.set(true);
     return this.apiService.getAll().pipe(
       map((tasks) => tasks.map((t) => ({ ...t, id: Number(t.id) }))),
       catchError(() => of([] as ServerTask[])),
-      tap((tasks) => {
-        this._tasks$.next(tasks);
-        this.isLoading.set(false);
-      }),
+      tap((tasks) => this._tasks$.next(tasks)),
+      finalize(() => this.isLoading.set(false)),
     );
   }
 

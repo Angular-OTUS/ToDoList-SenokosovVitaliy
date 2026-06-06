@@ -1,30 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject,OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-import { Subscription } from 'rxjs';
-
-import { Toast,ToastService } from '../../services/toast.service';
+import { Toast, ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-toasts',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './toasts.component.html',
   styleUrl: './toasts.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Toasts implements OnInit, OnDestroy {
-  private toastService = inject(ToastService);
-  toasts: Toast[] = [];
-  private subscription?: Subscription;
+export class Toasts {
+  private readonly toastService = inject(ToastService);
 
-  ngOnInit(): void {
-    this.subscription = this.toastService.toasts$.subscribe(
-      (toasts) => (this.toasts = toasts),
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
+  protected readonly toasts = toSignal(this.toastService.toasts$, {
+    initialValue: [] as Toast[],
+  });
 
   dismiss(id: number): void {
     this.toastService.removeToast(id);

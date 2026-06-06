@@ -2,10 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  DestroyRef,
   inject,
 } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 import { TodoService } from '../../services/todo.service';
 import { Spinner } from '../spinner/spinner';
@@ -25,14 +24,6 @@ interface BoardColumn {
 })
 export class Board {
   private readonly taskService = inject(TodoService);
-  private readonly destroyRef = inject(DestroyRef);
-
-  constructor() {
-    this.taskService
-      .loadTasks()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
-  }
 
   private readonly tasks = toSignal(this.taskService.tasks$, {
     initialValue: [] as Task[],

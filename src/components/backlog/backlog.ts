@@ -35,13 +35,6 @@ export class Backlog {
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
 
-  constructor() {
-    this.todoService
-      .loadTasks()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
-  }
-
   tasks = toSignal(this.todoService.tasks$, { initialValue: [] as Task[] });
 
   readonly isLoading = this.todoService.isLoading;
@@ -78,6 +71,7 @@ export class Backlog {
 
   selectTask(task: Task) {
     this.editingTaskId.set(null);
+    this.todoService.selectTask(task.id);
     this.router.navigate(['/backlog', task.id]);
   }
 
