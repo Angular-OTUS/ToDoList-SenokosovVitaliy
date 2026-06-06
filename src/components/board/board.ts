@@ -6,18 +6,20 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { TodoService } from '../../services/todo.service';
 import { Spinner } from '../spinner/spinner';
 import { Task, TaskStatus } from '../todo-item/todo-item';
 
 interface BoardColumn {
-  title: string;
+  titleKey: string;
   status: TaskStatus;
 }
 
 @Component({
   selector: 'app-board',
-  imports: [Spinner],
+  imports: [Spinner, TranslatePipe],
   templateUrl: './board.html',
   styleUrl: './board.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,9 +34,9 @@ export class Board {
   protected readonly isLoading = this.taskService.isLoading;
 
   private readonly columnDefs: readonly BoardColumn[] = [
-    { title: 'To Do', status: 'ToDo' },
-    { title: 'In Progress', status: 'InProgress' },
-    { title: 'Done', status: 'Completed' },
+    { titleKey: 'board.columns.todo', status: 'ToDo' },
+    { titleKey: 'board.columns.inProgress', status: 'InProgress' },
+    { titleKey: 'board.columns.done', status: 'Completed' },
   ];
 
   protected readonly columns = computed(() =>

@@ -1,6 +1,8 @@
 import { Component, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { ShowHintOnHoverDirective } from '../../shared/show-hint-on-hover.directive';
 import { Button } from '../button/button';
 
@@ -16,7 +18,7 @@ export interface Task {
 
 @Component({
   selector: 'app-todo-item',
-  imports: [Button, ShowHintOnHoverDirective, FormsModule],
+  imports: [Button, ShowHintOnHoverDirective, FormsModule, TranslatePipe],
   templateUrl: './todo-item.html',
   styleUrl: './todo-item.css',
 })

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { Button } from '../button/button';
 
 export interface CreateTaskPayload {
@@ -10,7 +12,7 @@ export interface CreateTaskPayload {
 
 @Component({
   selector: 'app-todo-create-item',
-  imports: [ReactiveFormsModule, Button],
+  imports: [ReactiveFormsModule, Button, TranslatePipe],
   templateUrl: './todo-create-item.html',
   styleUrl: './todo-create-item.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

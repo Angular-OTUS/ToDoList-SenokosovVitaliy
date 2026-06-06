@@ -8,6 +8,7 @@ import {
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
+import { TranslatePipe } from '@ngx-translate/core';
 import { map } from 'rxjs';
 
 import { TodoService } from '../../services/todo.service';
@@ -15,7 +16,7 @@ import { Task } from '../todo-item/todo-item';
 
 @Component({
   selector: 'app-todo-item-view',
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './todo-item-view.html',
   styleUrl: './todo-item-view.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

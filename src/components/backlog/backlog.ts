@@ -10,6 +10,8 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Router, RouterOutlet } from '@angular/router';
 
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+
 import { ToastService } from '../../services/toast.service';
 import { TodoService } from '../../services/todo.service';
 import { Spinner } from '../spinner/spinner';
@@ -24,6 +26,7 @@ import { Task, TaskStatus,TodoItem } from '../todo-item/todo-item';
     TodoCreateItem,
     Spinner,
     RouterOutlet,
+    TranslatePipe,
   ],
   templateUrl: './backlog.html',
   styleUrl: './backlog.css',
@@ -32,6 +35,7 @@ import { Task, TaskStatus,TodoItem } from '../todo-item/todo-item';
 export class Backlog {
   private todoService = inject(TodoService);
   private toastService = inject(ToastService);
+  private translate = inject(TranslateService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
 
@@ -52,9 +56,16 @@ export class Backlog {
       .addTask(text, description)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => this.toastService.showToast('Задача добавлена', 'success'),
+        next: () =>
+          this.toastService.showToast(
+            this.translate.instant('toasts.taskAdded'),
+            'success',
+          ),
         error: () =>
-          this.toastService.showToast('Ошибка при добавлении задачи', 'error'),
+          this.toastService.showToast(
+            this.translate.instant('toasts.taskAddError'),
+            'error',
+          ),
       });
   }
 
@@ -63,9 +74,16 @@ export class Backlog {
       .deleteTask(task.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => this.toastService.showToast('Задача удалена', 'success'),
+        next: () =>
+          this.toastService.showToast(
+            this.translate.instant('toasts.taskDeleted'),
+            'success',
+          ),
         error: () =>
-          this.toastService.showToast('Ошибка при удалении задачи', 'error'),
+          this.toastService.showToast(
+            this.translate.instant('toasts.taskDeleteError'),
+            'error',
+          ),
       });
   }
 
@@ -85,9 +103,16 @@ export class Backlog {
       .updateTask(task.id, newText)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => this.toastService.showToast('Задача обновлена', 'success'),
+        next: () =>
+          this.toastService.showToast(
+            this.translate.instant('toasts.taskUpdated'),
+            'success',
+          ),
         error: () =>
-          this.toastService.showToast('Ошибка при обновлении задачи', 'error'),
+          this.toastService.showToast(
+            this.translate.instant('toasts.taskUpdateError'),
+            'error',
+          ),
       });
   }
 

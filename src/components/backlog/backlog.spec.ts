@@ -2,6 +2,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
+import { provideTranslateService } from '@ngx-translate/core';
+
 import { Backlog } from './backlog';
 
 describe('Backlog', () => {
@@ -11,7 +13,11 @@ describe('Backlog', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Backlog],
-      providers: [provideHttpClient(), provideRouter([])],
+      providers: [
+        provideHttpClient(),
+        provideRouter([]),
+        provideTranslateService(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Backlog);

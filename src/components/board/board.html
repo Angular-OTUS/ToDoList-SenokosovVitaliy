@@ -1,12 +1,12 @@
 <div class="page">
-  <h2>Board</h2>
+  <h2>{{ 'board.title' | translate }}</h2>
   @if (isLoading()) {
   <app-spinner />
   } @else {
   <div class="board">
     @for (col of columns(); track col.status) {
     <div class="board-column">
-      <p>{{ col.title }} {{ col.tasks.length }}</p>
+      <p>{{ col.titleKey | translate }} {{ col.tasks.length }}</p>
       @for (t of col.tasks; track t.id) {
       <div class="task-card">{{ t.text }}</div>
       }

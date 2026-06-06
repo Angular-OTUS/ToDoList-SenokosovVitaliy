@@ -1,0 +1,57 @@
+{
+  "app": {
+    "title": "Tasks Board"
+  },
+  "nav": {
+    "backlog": "Backlog",
+    "board": "Board"
+  },
+  "filter": {
+    "all": "All",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "todo": "To Do"
+  },
+  "board": {
+    "title": "Board",
+    "columns": {
+      "todo": "To Do",
+      "inProgress": "In Progress",
+      "done": "Done"
+    }
+  },
+  "backlog": {
+    "title": "Backlog"
+  },
+  "todoItem": {
+    "remove": "remove",
+    "save": "save",
+    "cancel": "cancel",
+    "removeHint": "Click to remove this task"
+  },
+  "createTask": {
+    "namePlaceholder": "Task name",
+    "descriptionPlaceholder": "Task description",
+    "addButton": "add",
+    "addHint": "Click to add a new task"
+  },
+  "details": {
+    "title": "Task Description",
+    "completed": "Completed",
+    "placeholder": "Select a task to see its description"
+  },
+  "toasts": {
+    "taskAdded": "Task added",
+    "taskAddError": "Error while adding task",
+    "taskDeleted": "Task deleted",
+    "taskDeleteError": "Error while deleting task",
+    "taskUpdated": "Task updated",
+    "taskUpdateError": "Error while updating task",
+    "close": "Close"
+  },
+  "language": {
+    "label": "Language",
+    "en": "EN",
+    "ru": "RU"
+  }
+}

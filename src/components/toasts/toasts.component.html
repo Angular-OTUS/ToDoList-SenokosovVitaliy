@@ -2,7 +2,11 @@
   @for (toast of toasts(); track toast.id) {
     <div class="toast toast--{{ toast.type }}">
       <span class="toast__message">{{ toast.message }}</span>
-      <button class="toast__close" (click)="dismiss(toast.id)" aria-label="Close">×</button>
+      <button
+        class="toast__close"
+        (click)="dismiss(toast.id)"
+        [attr.aria-label]="'toasts.close' | translate"
+      >×</button>
     </div>
   }
 </div>
