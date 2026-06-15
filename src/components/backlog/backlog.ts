@@ -71,6 +71,7 @@ export class Backlog {
 
   selectTask(task: Task) {
     this.editingTaskId.set(null);
+    this.todoService.selectTask(task.id);
     this.router.navigate(['/backlog', task.id]);
   }
 

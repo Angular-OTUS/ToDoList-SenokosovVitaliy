@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, timer } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 export interface Toast {
   id: number;
@@ -13,14 +14,20 @@ export interface Toast {
   providedIn: 'root',
 })
 export class ToastService {
-  private toastsSubject = new BehaviorSubject<Toast[]>([]);
-  toasts$: Observable<Toast[]> = this.toastsSubject.asObservable();
+  private readonly _toasts$ = new BehaviorSubject<Toast[]>([]);
+  private readonly removed$ = new Subject<number>();
+
+  readonly toasts$: Observable<Toast[]> = this._toasts$.asObservable();
 
   private nextId = 1;
 
+  get toasts(): Toast[] {
+    return this._toasts$.value;
+  }
+
   showToast(
     message: string,
-    type: 'success' | 'info' | 'warning' | 'error' = 'info',
+    type: Toast['type'] = 'info',
     duration = 3000,
   ): void {
     const toast: Toast = {
@@ -29,18 +36,16 @@ export class ToastService {
       type,
       duration,
     };
+    this._toasts$.next([...this._toasts$.value, toast]);
 
-    const currentToasts = this.toastsSubject.value;
-    this.toastsSubject.next([...currentToasts, toast]);
-
-    // Auto-dismiss after duration
-    setTimeout(() => {
-      this.removeToast(toast.id);
-    }, duration);
+    timer(duration)
+      .pipe(takeUntil(this.removed$.pipe(filter((id) => id === toast.id))))
+      .subscribe(() => this.removeToast(toast.id));
   }
 
   removeToast(id: number): void {
-    const currentToasts = this.toastsSubject.value;
-    this.toastsSubject.next(currentToasts.filter((t) => t.id !== id));
+    if (!this._toasts$.value.some((t) => t.id === id)) return;
+    this._toasts$.next(this._toasts$.value.filter((t) => t.id !== id));
+    this.removed$.next(id);
   }
 }
